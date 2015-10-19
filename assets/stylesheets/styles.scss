@@ -8,7 +8,7 @@ body.blog-post {
     .title-wrapper .edit-topic,
     .post-info,
     .post-info.edits,
-    //#topic-title,
+    #topic-title,
     #suggested-topics,
     .posts button.create {
       display: none;
@@ -19,7 +19,10 @@ body.blog-post {
       box-sizing: inherit;
     }
 
-    position: relative;
+    //position: relative;
+    @media (min-width: 1265px) {
+      position: relative;
+    }
 
     // Text color, style, and rhythm
     font-size: 18px;
@@ -37,6 +40,11 @@ body.blog-post {
       margin-bottom: 0;
     }
 
+    .posted-at {
+      font-size: 0.618em;
+      line-height: 1;
+    }
+
     p {
       font-size: 1em;
       line-height: 1.5em;
@@ -47,7 +55,7 @@ body.blog-post {
       font-size: 1.1667em;
       line-height: 1.2857em;
       margin-top: 1.2857em;
-      margin-bottom: 0em;
+      margin-bottom: 1.2857em;
     }
 
     h3 {
@@ -81,6 +89,7 @@ body.blog-post {
     img {
       width: 100%;
       height: auto;
+      max-width: none;
     }
     figure {
       margin: 0;
@@ -126,9 +135,8 @@ body.blog-post {
     position: relative;
   }
 
-  .cooked p:first-child:first-letter {
-    font-size: 36px;
-    letter-spacing: 1px;
+  p:first-of-type::first-letter {
+    //font-size: 36px !important;
   }
 
   // This is the 'reply as linked topic' area - move it to the bottom for now.
@@ -136,7 +144,7 @@ body.blog-post {
     position: relative;
     left: 0;
     bottom: 100%;
-    width: 66%;
+    width: 75%;
     padding-left: 0;
     display: block !important;
 
@@ -147,18 +155,20 @@ body.blog-post {
     .reply-new {
       padding-left: 18px;
       padding-bottom: 13px;
+      opacity: 1 !important;
     }
   }
 
-  .large-title-container,
+  //.large-title-container,
   .posts {
     width: 90%;
-    max-width: 690px;
+    //max-width: 690px;
     margin-left: auto;
     margin-right: auto;
 
     @media (min-width: 768px) {
-      width: 66%;
+      width: 75%;
+      max-width: none;
     }
   }
 
@@ -166,6 +176,11 @@ body.blog-post {
     padding-left: 0;
     padding-right: 0;
     width: 100%;
+  }
+
+  // Get rid of the initial blue flash
+  .topic-body[style] {
+    background-color: #fff !important;
   }
 
   .topic-avatar,
@@ -181,20 +196,20 @@ body.blog-post {
 
   #topic-closing-info,
   #topic-footer-buttons {
-    background: #F3EEC2;
+    //background: #ccc;
   }
 
   #topic-footer-buttons {
     padding: 13px;
     font-size: 16px;
-    margin-bottom: 27px;
+    //margin-bottom: 27px;
   }
 
   blockquote {
     background: #f9f9f9;
     color: #777;
     border-left: 10px solid #ccc;
-    margin: 1.5em 10px 0 0;
+    //margin: 1.5em 10px 0 0;
     padding: 0.5em 10px;
     quotes: "\201C""\201D""\2018""\2019";
   }
