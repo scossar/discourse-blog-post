@@ -1,0 +1,7 @@
+plugins:
+  blog_post_enabled:
+    default: true
+    client: true
+  blog_post_category:
+    default: "blog"
+    client: true

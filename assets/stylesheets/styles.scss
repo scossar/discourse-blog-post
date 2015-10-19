@@ -1,0 +1,212 @@
+body.blog-post {
+
+  #main-outlet {
+
+    // Things to hide
+    #topic-progress,
+    #topic-progress-expanded,
+    .title-wrapper .edit-topic,
+    .post-info,
+    .post-info.edits,
+    //#topic-title,
+    #suggested-topics,
+    .posts button.create {
+      display: none;
+    }
+
+    box-sizing: border-box;
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    position: relative;
+
+    // Text color, style, and rhythm
+    font-size: 18px;
+    padding-top: 60px;
+
+    .gutter {
+      font-size: 0.8889em;
+      line-height: 1em;
+      margin-bottom: 0;
+    }
+
+    figcaption {
+      font-size: 0.8889em;
+      line-height: 1.9em;
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: 1em;
+      line-height: 1.5em;
+      margin: 0 0 1.5em 0;
+    }
+
+    h4, blockquote {
+      font-size: 1.1667em;
+      line-height: 1.2857em;
+      margin-top: 1.2857em;
+      margin-bottom: 0em;
+    }
+
+    h3 {
+      font-size: 1.3333em;
+      line-height: 1.1250em;
+      margin-top: 1.1250em;
+      margin-bottom: 13px;
+    }
+
+    h2 {
+      font-size: 2em;
+      line-height: 1.5em;
+      margin-top: 0.75em;
+      margin-bottom: 0;
+    }
+
+    h1 {
+      font-size: 2.6667em;
+      line-height: 1.125em;
+      margin-top: 0.5625em;
+      margin-bottom: 0;
+    }
+
+    color: #666 !important;
+
+    h1, h2, h3, h4 {
+      color: #333 !important;
+    }
+
+    // Elements
+    img {
+      width: 100%;
+      height: auto;
+    }
+    figure {
+      margin: 0;
+    }
+  }
+
+  .large-title-container h1 {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .names span {
+    font-weight: 200;
+  }
+
+  .topic-avatar {
+    float: none;
+  }
+
+  .topic-meta-data {
+    position: absolute;
+    top: -32px;
+    left: 54px;
+  }
+
+  // Holds the bg image
+  .bg-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  // Hide the default title
+  .fancy-title {
+    display: none;
+  }
+
+  #topic-title .title-wrapper .badge-wrapper.bullet {
+    position: relative;
+    top: -25px;
+  }
+
+  .posts {
+    position: relative;
+  }
+
+  .cooked p:first-child:first-letter {
+    font-size: 36px;
+    letter-spacing: 1px;
+  }
+
+  // This is the 'reply as linked topic' area - move it to the bottom for now.
+  .gutter {
+    position: relative;
+    left: 0;
+    bottom: 100%;
+    width: 66%;
+    padding-left: 0;
+    display: block !important;
+
+    .track-link {
+      // without the padding it disappears.
+      padding-left: 1px;
+    }
+    .reply-new {
+      padding-left: 18px;
+      padding-bottom: 13px;
+    }
+  }
+
+  .large-title-container,
+  .posts {
+    width: 90%;
+    max-width: 690px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: 768px) {
+      width: 66%;
+    }
+  }
+
+  .topic-body {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .topic-avatar,
+  .topic-body {
+    border-top: none;
+  }
+
+  .topic-avatar,
+  .topic-body .regular {
+    padding-top: 18px;
+    margin-top: 0;
+  }
+
+  #topic-closing-info,
+  #topic-footer-buttons {
+    background: #F3EEC2;
+  }
+
+  #topic-footer-buttons {
+    padding: 13px;
+    font-size: 16px;
+    margin-bottom: 27px;
+  }
+
+  blockquote {
+    background: #f9f9f9;
+    color: #777;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px 0 0;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+  blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  blockquote p {
+    display: inline;
+  }
+}
