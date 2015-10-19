@@ -4,9 +4,42 @@ import TopicModel from 'discourse/models/topic';
 import ComposerView from 'discourse/views/composer';
 import ApplicationView from 'discourse/views/application';
 
+function generateHeaderImage() {
+  var $firstPost = $('#post-cloak-1'),
+    $firstP = $firstPost.find('.cooked p').first(),
+    bgURL = $firstP.find('img').attr('src'),
+    $mainOutlet = $('#main-outlet'),
+    topicTitle = $('.fancy-title').html(),
+    $largeTitle = $('<div class="large-title-container"><h1>' + topicTitle + '</h1></div>'),
+    headerImgHeight = 472;
+
+  // #topic-title is being hidden with css. .large-title-container is used instead.
+  $('.container.posts').prepend($largeTitle);
+
+  // If there is an image in the first paragraph:
+  if (bgURL) {
+    if (!$mainOutlet.find('.bg-container').length) {
+      $mainOutlet.prepend('<div class="bg-container"></div>');
+    }
+
+    // Remove the image p so it doesn't display twice
+    $firstP.remove();
+
+    $('.bg-container').css({
+      'height': headerImgHeight + 'px',
+      'background-image': 'url(' + bgURL + ')',
+      'background-repeat': 'no-repeat',
+      'background-size': '100% auto', // + windowHeight + 'px',
+    });
+
+    $('.large-title-container').css({
+      'padding-top': headerImgHeight + 'px',
+    });
+  }
+}
+
 export default {
   name: 'extend-for-blog-post',
-
 
   initialize() {
     const createHeaderImage = function() {
@@ -72,7 +105,7 @@ export default {
 
         if (blogCategory === categoryFullSlug) {
           $('body').addClass('blog-post');
-          createHeaderImage();
+          generateHeaderImage();
           $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
         }
       },
@@ -83,7 +116,7 @@ export default {
 
         if (blogCategory === categoryFullSlug) {
           $('body').addClass('blog-post');
-          createHeaderImage();
+          generateHeaderImage();
           $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
         }
       }.observes('controller.model'),
@@ -95,7 +128,7 @@ export default {
       didInsertElement: function () {
         this._super();
         if ($('body').hasClass('blog-post')) {
-          createHeaderImage();
+          generateHeaderImage();
           $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
         }
       },
