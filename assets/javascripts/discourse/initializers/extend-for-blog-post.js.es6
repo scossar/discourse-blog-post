@@ -1,6 +1,8 @@
 import TopicView from 'discourse/views/topic';
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
+import ComposerView from 'discourse/views/composer';
+import ApplicationView from 'discourse/views/application';
 
 export default {
   name: 'extend-for-blog-post',
@@ -19,7 +21,6 @@ export default {
         headerImgHeight = 472;
 
       $('.container.posts').prepend($largeTitle);
-      $firstP.addClass('first-paragraph');
 
       if (bgURL) {
 
@@ -32,11 +33,7 @@ export default {
           //$largeTitle.insertAfter($('.bg-container'));
         }
 
-        $firstP.next().addClass('first-paragraph');
         $firstP.remove();
-
-
-
 
         $('.bg-container').css({
           'height': headerImgHeight + 'px',
@@ -57,7 +54,6 @@ export default {
       $('.bg-container').remove();
       $('.large-title-container').remove();
     };
-
 
     TopicModel.reopen({
       humanDate: function() {
@@ -80,6 +76,17 @@ export default {
           $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
         }
       },
+
+      topicChanged: function () {
+        let blogCategory = this.siteSettings.blog_post_category,
+          categoryFullSlug = this.get('categoryFullSlug');
+
+        if (blogCategory === categoryFullSlug) {
+          $('body').addClass('blog-post');
+          createHeaderImage();
+          $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
+        }
+      }.observes('controller.model'),
     });
 
     CloakedView.reopen({
@@ -92,6 +99,7 @@ export default {
           $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
         }
       },
+
       willDestroyElement: function () {
         if ($('body').hasClass('blog-post')) {
           $('body').removeClass('blog-post');
