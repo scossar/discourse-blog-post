@@ -6,8 +6,10 @@ import TopicModel from 'discourse/models/topic';
 
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
-    $firstP = $firstPost.find('.cooked p').first(),
-    $bgImg = $firstP.find('img'),
+    $headerImages = $firstPost.find('img.header-image'),
+    //$firstP = $firstPost.find('.cooked p').first(),
+    //$bgImg = $firstP.find('.header-image'),
+    $bgImg = $headerImages.first(),
     bgURL = $bgImg.attr('src'),
     imgHeight = $bgImg.attr('height'),
     imgWidth = $bgImg.attr('width'),
@@ -21,7 +23,7 @@ function generateHeaderImage() {
 
   // #topic-title is being hidden with css. .large-title-container is used instead.
   $('.container.posts').prepend($largeTitle);
-  $firstP.addClass('header-image');
+  //$firstP.addClass('header-image');
 
   // If there is an image in the first paragraph:
   if (bgURL) {
