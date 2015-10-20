@@ -1,13 +1,12 @@
 import TopicView from 'discourse/views/topic';
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
-import ComposerView from 'discourse/views/composer';
-import ApplicationView from 'discourse/views/application';
 
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
     $firstP = $firstPost.find('.cooked p').first(),
     bgURL = $firstP.find('img').attr('src'),
+    bgImg = $firstP.find('img'),
     $mainOutlet = $('#main-outlet'),
     topicTitle = $('.fancy-title').html(),
     $largeTitle = $('<div class="large-title-container"><h1>' + topicTitle + '</h1></div>'),
@@ -15,6 +14,8 @@ function generateHeaderImage() {
 
   // #topic-title is being hidden with css. .large-title-container is used instead.
   $('.container.posts').prepend($largeTitle);
+
+  console.log('img', bgImg);
 
   // If there is an image in the first paragraph:
   if (bgURL) {
@@ -38,6 +39,14 @@ function generateHeaderImage() {
   }
 }
 
+function generateBlogTopic(blogCategory, categoryFullSlug, postDate) {
+  if (blogCategory === categoryFullSlug) {
+    $('body').addClass('blog-post');
+    generateHeaderImage();
+    $('.topic-meta-data').append('<div class="posted-at">' + postDate + '</div>');
+  }
+}
+
 function destroyBlog() {
   if ($('body').hasClass('blog-post')) {
     $('body').removeClass('blog-post');
@@ -50,7 +59,6 @@ export default {
   name: 'extend-for-blog-post',
 
   initialize() {
-
     // Create a typical 'posted at' date - this needs to be improved
     TopicModel.reopen({
       humanDate: function() {
@@ -64,25 +72,11 @@ export default {
 
       didInsertElement: function () {
         this._super();
-        let blogCategory = this.siteSettings.blog_post_category,
-          categoryFullSlug = this.get('categoryFullSlug');
-
-        if (blogCategory === categoryFullSlug) {
-          $('body').addClass('blog-post');
-          generateHeaderImage();
-          $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
-        }
+        generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
       },
 
       topicChanged: function () {
-        let blogCategory = this.siteSettings.blog_post_category,
-          categoryFullSlug = this.get('categoryFullSlug');
-
-        if (blogCategory === categoryFullSlug) {
-          $('body').addClass('blog-post');
-          generateHeaderImage();
-          $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
-        }
+        generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
       }.observes('controller.model', 'controller.currentPath'),
 
     });
@@ -92,7 +86,7 @@ export default {
 
       didInsertElement: function () {
         this._super();
-        let blogCategory = this.siteSettings.blog_post_category,
+        var blogCategory = this.siteSettings.blog_post_category,
           categoryFullSlug = 'category-' + blogCategory;
         if ($('body').hasClass(categoryFullSlug)) {
           $('body').addClass('blog-post');
