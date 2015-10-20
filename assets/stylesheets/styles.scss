@@ -129,16 +129,6 @@ body.blog-post {
     right: 0;
   }
 
-  @media (max-width: 640px) {
-    .bg-container[style] {
-      height: 260px !important; // overrides height set with javascript - temporary fix!
-    }
-    .large-title-container[style] {
-      padding-top: 260px !important;
-    }
-  }
-
-
   // Hide the default title
   .fancy-title {
     display: none;

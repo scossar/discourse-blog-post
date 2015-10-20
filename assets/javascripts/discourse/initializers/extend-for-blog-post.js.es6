@@ -5,17 +5,21 @@ import TopicModel from 'discourse/models/topic';
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
     $firstP = $firstPost.find('.cooked p').first(),
-    bgURL = $firstP.find('img').attr('src'),
-    bgImg = $firstP.find('img'),
+    //bgURL = $firstP.find('img').attr('src'),
+    $bgImg = $firstP.find('img'),
+    bgURL = $bgImg.attr('src'),
+    imgHeight = $bgImg.attr('height'),
+    imgWidth = $bgImg.attr('width'),
+    bgRatio = imgHeight / imgWidth,
     $mainOutlet = $('#main-outlet'),
+    bgImgWidth = $mainOutlet.width(),
     topicTitle = $('.fancy-title').html(),
     $largeTitle = $('<div class="large-title-container"><h1>' + topicTitle + '</h1></div>'),
-    headerImgHeight = 472;
+    bgImgMaxHeight = 472,
+    bgImgHeight;
 
   // #topic-title is being hidden with css. .large-title-container is used instead.
   $('.container.posts').prepend($largeTitle);
-
-  console.log('img', bgImg);
 
   // If there is an image in the first paragraph:
   if (bgURL) {
@@ -26,17 +30,36 @@ function generateHeaderImage() {
     // Remove the image p so it doesn't display twice
     $firstP.remove();
 
+    bgImgHeight = (bgImgMaxHeight < bgImgWidth * bgRatio) ? bgImgMaxHeight : bgImgWidth * bgRatio;
+
+
     $('.bg-container').css({
-      'height': headerImgHeight + 'px',
+      'height': bgImgHeight + 'px',
       'background-image': 'url(' + bgURL + ')',
       'background-repeat': 'no-repeat',
       'background-size': '100% auto', // + windowHeight + 'px',
     });
 
     $('.large-title-container').css({
-      'padding-top': headerImgHeight + 'px',
+      'padding-top': bgImgHeight + 'px',
     });
+
+    // Adjusts bg-image height on browser resize
+    adjustForResize(bgImgMaxHeight, bgRatio);
   }
+}
+
+function resizeBackground(event) {
+  var imgWidth = $('#main-outlet').width(),
+    newHeight = (event.data.bgImgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgImgMaxHeight : imgWidth * event.data.bgRatio;
+
+  console.log('new max height', newHeight);
+  $('.bg-container').css('height', newHeight + 'px');
+  $('.large-title-container').css('padding-top', newHeight + 'px');
+}
+
+function adjustForResize(maxHeight, imgRatio) {
+  $(window).on('resize', {bgImgMaxHeight: maxHeight, bgRatio: imgRatio}, resizeBackground);
 }
 
 function generateBlogTopic(blogCategory, categoryFullSlug, postDate) {
@@ -52,6 +75,7 @@ function destroyBlog() {
     $('body').removeClass('blog-post');
     $('.bg-container').remove();
     $('.large-title-container').remove();
+    $(window).off('resize', adjustForResize);
   }
 }
 
