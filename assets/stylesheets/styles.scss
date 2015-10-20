@@ -143,8 +143,8 @@ body.blog-post {
     position: relative;
   }
 
-  .cooked p:first-of-type::first-letter {
-    //font-size: 36px !important;
+  .cooked .large-letter {
+    font-size: 36px;
   }
 
   // This is the 'reply as linked topic' area - move it to the bottom for now.
@@ -232,6 +232,10 @@ body.blog-post {
   }
   blockquote p {
     display: inline;
+  }
+
+  .header-image {
+    display: none;
   }
 }
 

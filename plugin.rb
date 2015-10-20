@@ -5,3 +5,4 @@
 
 enabled_site_setting :blog_post_enabled
 register_asset 'stylesheets/styles.scss'
+register_asset 'javascripts/whitelist-classes.js', :server_side

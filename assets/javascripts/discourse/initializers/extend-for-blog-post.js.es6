@@ -1,12 +1,12 @@
 import TopicView from 'discourse/views/topic';
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
-import ComposerView from 'discourse/views/composer';
+//import ComposerView from 'discourse/views/composer';
+//import ApplicationView from 'discourse/views/application';
 
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
     $firstP = $firstPost.find('.cooked p').first(),
-  //bgURL = $firstP.find('img').attr('src'),
     $bgImg = $firstP.find('img'),
     bgURL = $bgImg.attr('src'),
     imgHeight = $bgImg.attr('height'),
@@ -21,18 +21,17 @@ function generateHeaderImage() {
 
   // #topic-title is being hidden with css. .large-title-container is used instead.
   $('.container.posts').prepend($largeTitle);
+  $firstP.addClass('header-image');
 
   // If there is an image in the first paragraph:
   if (bgURL) {
+    //$firstP.css('display', 'none');
+    //$firstP.addClass('header-image');
     if (!$mainOutlet.find('.bg-container').length) {
       $mainOutlet.prepend('<div class="bg-container"></div>');
     }
 
-    // Remove the image p so it doesn't display twice
-    $firstP.remove();
-
     bgImgHeight = (bgImgMaxHeight < bgImgWidth * bgRatio) ? bgImgMaxHeight : bgImgWidth * bgRatio;
-
 
     $('.bg-container').css({
       'height': bgImgHeight + 'px',
@@ -83,10 +82,6 @@ function destroyBlog() {
   }
 }
 
-function isBlog() {
-  return $('body').hasClass('blog-post');
-}
-
 export default {
   name: 'extend-for-blog-post',
 
@@ -105,13 +100,11 @@ export default {
       didInsertElement: function () {
         this._super();
         generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
-        console.log('did insert');
       },
 
       topicChanged: function () {
         Ember.run.scheduleOnce('afterRender', this, function () {
           generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
-          console.log('topic changed');
         });
       }.observes('controller.model'),
     });
@@ -138,4 +131,3 @@ export default {
     });
   }
 }
-
