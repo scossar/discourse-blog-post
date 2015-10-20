@@ -47,7 +47,6 @@ function resizeBackground(event) {
   var imgWidth = $('#main-outlet').width(),
     newHeight = (event.data.bgImgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgImgMaxHeight : imgWidth * event.data.bgRatio;
 
-  console.log('new max height', newHeight);
   $('.bg-container').css('height', newHeight + 'px');
   $('.large-title-container').css('padding-top', newHeight + 'px');
 }
