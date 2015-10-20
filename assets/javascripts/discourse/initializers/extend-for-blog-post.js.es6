@@ -1,14 +1,10 @@
 import TopicView from 'discourse/views/topic';
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
-//import ComposerView from 'discourse/views/composer';
-//import ApplicationView from 'discourse/views/application';
 
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
     $headerImages = $firstPost.find('img.header-image'),
-    //$firstP = $firstPost.find('.cooked p').first(),
-    //$bgImg = $firstP.find('.header-image'),
     $bgImg = $headerImages.first(),
     bgURL = $bgImg.attr('src'),
     imgHeight = $bgImg.attr('height'),
@@ -23,12 +19,8 @@ function generateHeaderImage() {
 
   // #topic-title is being hidden with css. .large-title-container is used instead.
   $('.container.posts').prepend($largeTitle);
-  //$firstP.addClass('header-image');
 
-  // If there is an image in the first paragraph:
   if (bgURL) {
-    //$firstP.css('display', 'none');
-    //$firstP.addClass('header-image');
     if (!$mainOutlet.find('.bg-container').length) {
       $mainOutlet.prepend('<div class="bg-container"></div>');
     }

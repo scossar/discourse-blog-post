@@ -1,4 +1,4 @@
-body.blog-post {
+.blog-post {
 
   #main-outlet {
 
@@ -11,6 +11,7 @@ body.blog-post {
     .post-info,
     .post-info.edits,
     #topic-title,
+    .fancy-title,
     #suggested-topics,
     .posts button.create {
       display: none;
@@ -21,14 +22,16 @@ body.blog-post {
       box-sizing: inherit;
     }
 
-    //position: relative;
-    @media (min-width: 1265px) {
+    // Sets the width where the header image will stop displaying full window width
+    @media (min-width: 1400px) {
       position: relative;
     }
 
+    // Positions top of background image - adjust for header height
+    padding-top: 60px;
+
     // Text color, style, and rhythm
     font-size: 18px;
-    padding-top: 60px;
 
     .gutter {
       font-size: 0.8889em;
@@ -89,6 +92,7 @@ body.blog-post {
 
     // Elements
     img {
+      // Setting width at 100% prevents images from being light-boxed.
       width: 100%;
       height: auto;
       max-width: none;
@@ -101,16 +105,35 @@ body.blog-post {
     }
   }
 
+  // Classes
   .large-title-container h1 {
-    border-bottom: 1px solid #ddd;
+    //border-bottom: 1px solid #ddd;
   }
 
-  .names span {
-    //font-weight: 200;
+  // Hide the header image so it doesn't display twice
+  .header-image {
+    display: none;
+  }
+
+  .topic-avatar,
+  .topic-body {
+    border-top: none;
   }
 
   .topic-avatar {
     float: none;
+  }
+
+  .topic-body {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .topic-avatar,
+  .topic-body .regular {
+    padding-top: 0;
+    margin-top: 0;
   }
 
   .topic-meta-data {
@@ -122,7 +145,7 @@ body.blog-post {
     }
   }
 
-  // Holds the bg image
+  // background image
   .bg-container {
     position: absolute;
     left: 0;
@@ -134,16 +157,12 @@ body.blog-post {
     display: none;
   }
 
-  #topic-title .title-wrapper .badge-wrapper.bullet {
-    position: relative;
-    top: -25px;
-  }
-
   .posts {
     position: relative;
   }
 
-  .cooked .large-letter {
+  .large-letter {
+    // <span class="large-letter"></span> is a whitelisted tag
     font-size: 36px;
   }
 
@@ -152,7 +171,7 @@ body.blog-post {
     position: relative;
     left: 0;
     bottom: 100%;
-    width: 75%;
+    width: 66%;
     padding-left: 0;
     display: block !important;
 
@@ -169,22 +188,14 @@ body.blog-post {
 
   //.large-title-container,
   .posts {
-    //width: 90%;
     width: 100%;
-    //max-width: 690px;
     margin-left: auto;
     margin-right: auto;
 
     @media (min-width: 768px) {
-      width: 75%;
+      width: 66%;
       max-width: none;
     }
-  }
-
-  .topic-body {
-    padding-left: 0;
-    padding-right: 0;
-    width: 100%;
   }
 
   // Get rid of the initial blue flash
@@ -192,33 +203,15 @@ body.blog-post {
     background-color: #fff !important;
   }
 
-  .topic-avatar,
-  .topic-body {
-    border-top: none;
-  }
-
-  .topic-avatar,
-  .topic-body .regular {
-    padding-top: 18px;
-    margin-top: 0;
-  }
-
-  #topic-closing-info,
-  #topic-footer-buttons {
-    //background: #ccc;
-  }
-
   #topic-footer-buttons {
     padding: 13px;
     font-size: 16px;
-    //margin-bottom: 27px;
   }
 
   blockquote {
     background: #f9f9f9;
     color: #777;
     border-left: 10px solid #ccc;
-    //margin: 1.5em 10px 0 0;
     padding: 0.5em 10px;
     quotes: "\201C""\201D""\2018""\2019";
   }
