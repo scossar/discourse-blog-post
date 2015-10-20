@@ -16,4 +16,4 @@ forum.
 
 The blog post category defaults to 'blog'. This can be changed in the plugin settings.
 When a topic of the chosen blog post category is visited in the browser, the css class
-`blog-post` is added to the body. Custom styles may be added to the `.blog-post` class.
+`.blog-post` is added to the body. Custom styles may be added to the `.blog-post` class.
