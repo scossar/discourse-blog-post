@@ -1,4 +1,4 @@
 en:
   site_settings:
     blog_post_enabled: "Enable blog posts?"
-    blog_post_category: "Category to use for blog posts (defaults to 'blog')"
+    blog_post_category: "Category slug to use for blog posts (defaults to 'blog')"
