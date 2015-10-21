@@ -16,6 +16,9 @@ forum.
 This plugin was developed as a 'proof of concept.' Use it on production sites at
 your own risk.
 
+My intention is to restructure the code to make it less dependent on the Discourse
+HTML structure.
+
 Pull requests and suggestions for improvement are welcome.
 
 ### Use
