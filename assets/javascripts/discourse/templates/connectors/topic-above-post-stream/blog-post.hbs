@@ -1,0 +1,9 @@
+{{#if isBlog}}
+  {{#if hasHeaderImage}}
+    <div class="bg-container">
+      <h3>has header images</h3>
+
+    </div>
+  {{/if}}
+  {{large-title title=model.title username=model.firstPoster blogPostDate=model.blogPostDate}}
+{{/if}}

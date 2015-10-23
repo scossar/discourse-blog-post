@@ -12,7 +12,7 @@
     .post-info.edits,
     #topic-title,
     .fancy-title,
-    #suggested-topics,
+    //#suggested-topics,
     .posts button.create {
       display: none;
     }
@@ -230,8 +230,32 @@
   }
 
   .header-image {
-    display: none;
+    //display: none;
   }
+
+  #suggested-topics {
+    font-size: 0.75em;
+
+    .topic-list th:first-of-type, .topic-list td:first-of-type {
+      padding-left: 0;
+    }
+    .default {
+      width: 66%;
+    }
+    .category {
+      display: none;
+    }
+    .posts {
+      width: 10%;
+    }
+    .views {
+      width: 10%;
+    }
+    .activity {
+      width: 16%;
+    }
+  }
+
 }
 
 .mobile-view .blog-post {

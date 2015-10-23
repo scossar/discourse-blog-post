@@ -1,7 +1,9 @@
 import TopicView from 'discourse/views/topic';
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
+import TopicController from 'discourse/controllers/topic';
 
+/*
 function generateHeaderImage() {
   var $firstPost = $('#post-cloak-1'),
     $headerImages = $firstPost.find('img.header-image'),
@@ -73,54 +75,81 @@ function destroyBlog() {
     $('.large-title-container').remove();
     $(window).off('resize', adjustForResize);
   }
-}
+} */
 
 export default {
   name: 'extend-for-blog-post',
 
   initialize() {
-    // Create a typical 'posted at' date - this needs to be improved
+
+    //CloakedView.reopen({
+    //  humanDate: Em.computed.alias('controller.model.humanDate'),
+    //
+    //  didInsertElement: function () {
+    //    this._super();
+    //    let blogCategory = this.siteSettings.blog_post_category,
+    //      categoryFullSlug = 'category-' + blogCategory;
+    //    if (categoryFullSlug === blogCategory) {
+    //      $('body').addClass('blog-post');
+    //    } else {
+    //      $('body').removeClass('blog-post');
+    //    }
+    //  },
+    //
+    //  willDestroyElement: function () {
+    //    this._super();
+    //    $('body').removeClass('blog-post');
+    //  },
+    //});
+
     TopicModel.reopen({
-      humanDate: function () {
-        let postDate = new Date(this.get('created_at')).toLocaleDateString();
-        return postDate;
-      }.property('created_at'),
+      //humanDate: function () {
+      //  let postDate = new Date(this.get('created_at')).toLocaleDateString();
+      //  return postDate;
+      //}.property('created_at'),
+      //
+      //blogClass: function () {
+      //  let blogCategory = this.siteSettings.blog_post_category;
+      //  return blogCategory.replace(/ /g, '-');
+      //}.property(),
+      //
+      //isBlog: function () {
+      //  let currentCategory = this.get('category.fullSlug');
+      //  return this.blogClass === currentCategory;
+      //}.property('category.fullSlug'),
+      //
+      //firstPost: function () {
+      //  return this.get('postStream.posts')[0]['cooked'];
+      //}.property('postStream.posts'),
+
     });
 
-    TopicView.reopen({
-      humanDate: Em.computed.alias('controller.model.humanDate'),
-
-      didInsertElement: function () {
-        this._super();
-        generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
-      },
-
-      topicChanged: function () {
-        Ember.run.scheduleOnce('afterRender', this, function () {
-          generateBlogTopic(this.siteSettings.blog_post_category, this.get('categoryFullSlug'), this.get('humanDate'));
-        });
-      }.observes('controller.model'),
+    TopicController.reopen({
     });
 
-    CloakedView.reopen({
-      humanDate: Em.computed.alias('controller.model.humanDate'),
-
-      didInsertElement: function () {
-        this._super();
-        var blogCategory = this.siteSettings.blog_post_category,
-          categoryFullSlug = 'category-' + blogCategory;
-        if ($('body').hasClass(categoryFullSlug)) {
-          $('body').addClass('blog-post');
-          generateHeaderImage();
-          $('.topic-meta-data').append('<div class="posted-at">' + this.get('humanDate') + '</div>');
-        } else {
-          destroyBlog();
-        }
-      },
-
-      willDestroyElement: function () {
-        destroyBlog();
-      }
-    });
+    //TopicView.reopen({
+    //  isBlog: Em.computed.alias('controller.model.isBlog'),
+    //  firstPost: Em.computed.alias('controller.model.firstPost'),
+    //
+    //  hasHeaderImages: function() {
+    //    let firstPost = this.firstPost;
+    //    $postChildren = $($(firstPost).parseHTML()).children();
+    //    console.log('fired from has header images', $postChildren.length);
+    //  }.property('firstPost'),
+    //
+    //  blogBodyClass: function () {
+    //    if (this.isBlog) {
+    //      console.log('first post');
+    //      $('body').addClass('blog-post');
+    //    }
+    //  }.on('didInsertElement'),
+    //
+    //  addHeaderImage: function () {
+    //  }.on('didInsertElement'),
+    //
+    //  removeBlogBodyClass: function () {
+    //    $('body').removeClass('blog-post');
+    //  }.on('willDestroyElement'),
+    //});
   }
 }
