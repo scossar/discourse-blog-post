@@ -1,154 +1,122 @@
 import TopicView from 'discourse/views/topic';
+import PostView from 'discourse/views/post'
 import CloakedView from 'discourse/views/cloaked';
 import TopicModel from 'discourse/models/topic';
 import TopicController from 'discourse/controllers/topic';
 
-/*
-function generateHeaderImage() {
-  var $firstPost = $('#post-cloak-1'),
-    $headerImages = $firstPost.find('img.header-image'),
-    $bgImg = $headerImages.first(),
-    bgURL = $bgImg.attr('src'),
-    imgHeight = $bgImg.attr('height'),
-    imgWidth = $bgImg.attr('width'),
-    bgRatio = imgHeight / imgWidth,
-    $mainOutlet = $('#main-outlet'),
-    bgImgWidth = $mainOutlet.width(),
-    topicTitle = $('.fancy-title').html(),
-    $largeTitle = $('<div class="large-title-container"><h1>' + topicTitle + '</h1></div>'),
-    bgImgMaxHeight = 472,
-    bgImgHeight;
-
-  // #topic-title is being hidden with css. .large-title-container is used instead.
-  $('.container.posts').prepend($largeTitle);
-
-  if (bgURL) {
-    if (!$mainOutlet.find('.bg-container').length) {
-      $mainOutlet.prepend('<div class="bg-container"></div>');
-    }
-
-    bgImgHeight = (bgImgMaxHeight < bgImgWidth * bgRatio) ? bgImgMaxHeight : bgImgWidth * bgRatio;
-
-    $('.bg-container').css({
-      'height': bgImgHeight + 'px',
-      'background-image': 'url(' + bgURL + ')',
-      'background-repeat': 'no-repeat',
-      'background-size': '100% auto', // + windowHeight + 'px',
-    });
-
-    $('.large-title-container').css({
-      'padding-top': bgImgHeight + 'px',
-    });
-
-    // Adjusts bg-image height on browser resize
-    adjustForResize(bgImgMaxHeight, bgRatio);
-  }
+function helloFrom(location) {
+  console.log('Hello from ', location);
 }
-
-function resizeBackground(event) {
-  var imgWidth = $('#main-outlet').width(),
-    newHeight = (event.data.bgImgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgImgMaxHeight : imgWidth * event.data.bgRatio;
-
-  $('.bg-container').css('height', newHeight + 'px');
-  $('.large-title-container').css('padding-top', newHeight + 'px');
-}
-
-function adjustForResize(maxHeight, imgRatio) {
-  $(window).on('resize', {
-    bgImgMaxHeight: maxHeight,
-    bgRatio: imgRatio
-  }, resizeBackground);
-}
-
-function generateBlogTopic(blogCategory, categoryFullSlug, postDate) {
-  if (blogCategory === categoryFullSlug) {
-    $('body').addClass('blog-post');
-    generateHeaderImage();
-    $('.topic-meta-data').append('<div class="posted-at">' + postDate + '</div>');
-  }
-}
-
-function destroyBlog() {
-  if ($('body').hasClass('blog-post')) {
-    $('body').removeClass('blog-post');
-    $('.bg-container').remove();
-    $('.large-title-container').remove();
-    $(window).off('resize', adjustForResize);
-  }
-} */
 
 export default {
   name: 'extend-for-blog-post',
 
   initialize() {
+    TopicModel.reopen({});
+
+    // Controllers maintain state based on the current route. In general, models
+    // have properties that are saved to the server, controllers have properties that
+    // do not need to be saved.
+    TopicController.reopen({
+      blogCategory: function () {
+        return this.siteSettings.blog_post_category;
+      }.property(),
+
+      blogCategoryClass: function () {
+        return this.get('blogCategory').replace(/ /g, '-');
+      }.property('blogCategory'),
+
+      isBlog: function () {
+        const currentCategory = this.get('model.category.fullSlug');
+        return this.get('blogCategoryClass') === currentCategory;
+      }.property('model.category.fullSlug'),
+
+      postDate: function () {
+        return new Date(this.get('model.created_at')).toLocaleDateString();
+      }.property('model.created_at'),
+
+      firstPoster: function () {
+        const postStream = this.get('model.postStream');
+        if (!postStream) { return; }
+        return postStream.get('posts')[0].username;
+      }.property('model.postStream'),
+
+      firstPost: function () {
+        const postStream = this.get('model.postStream');
+        if ( !postStream ) { return; }
+        if ( !postStream.get('posts')[0]) { return; }
+
+        return postStream.get('posts')[0].cooked;
+      }.property('model.postStream'),
+
+      bgImgURLs: function () {
+        const firstPost = this.get('firstPost');
+        if (!firstPost) { return; }
+        let $firstPost = $($.parseHTML(firstPost));
+        return $firstPost.find('.header-image');
+      }.property('firstPost'),
+
+      hasBgImg: function () {
+        const bgImgURLs = this.get('bgImgURLs');
+        if (!bgImgURLs) { return; }
+        return bgImgURLs.length;
+      }.property('bgImgURLs'),
+
+    });
+
+    TopicView.reopen({
+
+    });
+
+    PostView.reopen({
+      firstPost: Em.computed.alias('controller.firstPost'),
+      blogCategory: Em.computed.alias('controller.blogCategory'),
+      blogCategoryClass: Em.computed.alias('controller.blogCategoryClass'),
+      isBlog: Em.computed.alias('controller.isBlog'),
+      bgImgURLs: Em.computed.alias('controller.bgImgURLs'),
+      hasBgImg: Em.computed.alias('controller.hasBgImg'),
+      postDate: Em.computed.alias('controller.postDate'),
+      firstPoster: Em.computed.alias('controller.firstPoster'),
+
+      addBlogBodyClass: function () {
+        if (this.get('isBlog')) {
+          $('body').addClass('blog-post');
+        }
+      }.on('didInsertElement'),
+
+      removeBlogBodyClass: function () {
+        if (this.get('isBlog')) {
+          $('body').removeClass('blog-post');
+        }
+      }.on('willDestroyElement'),
+
+      sayHello: function () {
+        helloFrom('post view insert');
+        console.log('the blog category class is ', this.get('blogCategoryClass'));
+        console.log('is this a blog?', this.get('isBlog'));
+        console.log('bg image', this.get('bgImgURLs'));
+        console.log('has background image', this.get('hasBgImg'));
+        console.log('post date', this.get('postDate'));
+        console.log('first poster', this.get('firstPoster'));
+        console.log('first from post view', this.get('firstPost'));
+      }.on('didInsertElement'),
+
+      //sayGoodBye: function () {
+      //  helloFrom('post view will destroy');
+      //}.on('willDestroyElement'),
+
+    });
+
 
     //CloakedView.reopen({
-    //  humanDate: Em.computed.alias('controller.model.humanDate'),
-    //
-    //  didInsertElement: function () {
-    //    this._super();
-    //    let blogCategory = this.siteSettings.blog_post_category,
-    //      categoryFullSlug = 'category-' + blogCategory;
-    //    if (categoryFullSlug === blogCategory) {
-    //      $('body').addClass('blog-post');
-    //    } else {
-    //      $('body').removeClass('blog-post');
-    //    }
-    //  },
-    //
-    //  willDestroyElement: function () {
-    //    this._super();
-    //    $('body').removeClass('blog-post');
-    //  },
-    //});
-
-    TopicModel.reopen({
-      //humanDate: function () {
-      //  let postDate = new Date(this.get('created_at')).toLocaleDateString();
-      //  return postDate;
-      //}.property('created_at'),
-      //
-      //blogClass: function () {
-      //  let blogCategory = this.siteSettings.blog_post_category;
-      //  return blogCategory.replace(/ /g, '-');
-      //}.property(),
-      //
-      //isBlog: function () {
-      //  let currentCategory = this.get('category.fullSlug');
-      //  return this.blogClass === currentCategory;
-      //}.property('category.fullSlug'),
-      //
-      //firstPost: function () {
-      //  return this.get('postStream.posts')[0]['cooked'];
-      //}.property('postStream.posts'),
-
-    });
-
-    TopicController.reopen({
-    });
-
-    //TopicView.reopen({
-    //  isBlog: Em.computed.alias('controller.model.isBlog'),
-    //  firstPost: Em.computed.alias('controller.model.firstPost'),
-    //
-    //  hasHeaderImages: function() {
-    //    let firstPost = this.firstPost;
-    //    $postChildren = $($(firstPost).parseHTML()).children();
-    //    console.log('fired from has header images', $postChildren.length);
-    //  }.property('firstPost'),
-    //
-    //  blogBodyClass: function () {
-    //    if (this.isBlog) {
-    //      console.log('first post');
-    //      $('body').addClass('blog-post');
-    //    }
+    //  firstPost: Em.computed.alias('controller.firstPost'),
+    //  sayHello: function () {
+    //    helloFrom('cloaked view insert');
+    //    console.log('first from cloaked view', this.get('firstPost'));
     //  }.on('didInsertElement'),
     //
-    //  addHeaderImage: function () {
-    //  }.on('didInsertElement'),
-    //
-    //  removeBlogBodyClass: function () {
-    //    $('body').removeClass('blog-post');
+    //  sayGoodBye: function () {
+    //    helloFrom('cloaked view will destroy');
     //  }.on('willDestroyElement'),
     //});
   }
