@@ -2,24 +2,6 @@ import PostView from 'discourse/views/post';
 import TopicView from 'discourse/views/topic';
 import TopicController from 'discourse/controllers/topic';
 
-// This shoud be a mixin
-
-function resizeBackground(event) {
-  var imgWidth = $('#main-outlet').width(),
-    newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
-
-  $('.bg-container').css('height', newHeight + 'px');
-  $('.large-title').css('padding-top', newHeight + 'px');
-}
-
-function adjustForResize(maxHeight, imgRatio) {
-  $(window).on('resize', {
-    bgMaxHeight: maxHeight,
-    bgRatio: imgRatio
-  }, resizeBackground);
-}
-
-
 export default {
   name: 'extend-for-blog-post',
 
@@ -41,7 +23,9 @@ export default {
 
       topicTitle: function () {
         const topicTitle = this.get('model.fancy_title');
-        if (!topicTitle) { return; }
+        if (!topicTitle) {
+          return;
+        }
         return topicTitle;
       }.property('model.fancy_title'),
 
@@ -51,7 +35,9 @@ export default {
 
       postedBy: function () {
         const poster = this.get('model.details.created_by.username');
-        if (!poster) { return; }
+        if (!poster) {
+          return;
+        }
         return poster;
       }.property('model.details.created_by.username'),
 
@@ -111,6 +97,22 @@ export default {
         }
       },
 
+      _resizeBackground: function (event) {
+        var imgWidth = $('#main-outlet').width(),
+          newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
+
+        $('.bg-container').css('height', newHeight + 'px');
+        $('.large-title').css('padding-top', newHeight + 'px');
+      },
+
+      _adjustForResize: function (maxHeight, imgRatio) {
+        $(window).on('resize', {
+          bgMaxHeight: maxHeight,
+          bgRatio: imgRatio
+        }, this._resizeBackground);
+      },
+
+
       didInsertElement: function () {
         this._addBlogBodyClass();
         let bgImages = this.get('bgImages');
@@ -120,7 +122,7 @@ export default {
             imageWidth = $firstImage.attr('width'),
             imageHeight = $firstImage.attr('height'),
             imageRatio = imageHeight / imageWidth,
-            //imageMaxHeight = 472,
+          //imageMaxHeight = 472,
             imageMaxHeight = $firstImage.data('max-height') || 472,
             windowWidth = $('#main-outlet').width(),
             imageComputedHeight = imageMaxHeight < windowWidth * imageRatio ? imageMaxHeight : windowWidth * imageRatio;
@@ -137,7 +139,7 @@ export default {
             'padding-top': imageComputedHeight + 'px'
           });
 
-          adjustForResize(imageMaxHeight, imageRatio);
+          this._adjustForResize(imageMaxHeight, imageRatio);
         }
       },
 
