@@ -24,7 +24,6 @@ export default {
   name: 'extend-for-blog-post',
 
   initialize() {
-
     TopicController.reopen({
 
       blogCategory: function () {
@@ -135,6 +134,7 @@ export default {
           });
 
           $('.large-title').css({
+            'visibility': 'visible',
             'padding-top': imageComputedHeight + 'px'
           });
 
