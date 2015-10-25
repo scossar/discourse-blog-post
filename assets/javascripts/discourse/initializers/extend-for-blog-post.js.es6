@@ -1,4 +1,5 @@
-import PostView from 'discourse/views/post'
+import PostView from 'discourse/views/post';
+import TopicView from 'discourse/views/topic';
 import TopicController from 'discourse/controllers/topic';
 
 // This shoud be a mixin
@@ -79,8 +80,23 @@ export default {
 
     });
 
+    TopicView.reopen({
+      isBlog: Em.computed.alias('controller.isBlog'),
+
+      addBlogBodyClass: function () {
+        if (this.get('isBlog')) {
+          $('body').addClass('blog-post');
+        }
+      }.on('didInsertElement'),
+
+      removeBlogBodyClass: function () {
+        if (this.get('isBlog')) {
+          $('body').removeClass('blog-post');
+        }
+      }.on('willDestroyElement'),
+    });
+
     PostView.reopen({
-      //firstPoster: Em.computed('controller.firstPoster'),
       blogCategory: Em.computed.alias('controller.blogCategory'),
       blogCategoryClass: Em.computed.alias('controller.blogCategoryClass'),
       isBlog: Em.computed.alias('controller.isBlog'),
