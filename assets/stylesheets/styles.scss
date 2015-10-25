@@ -109,12 +109,7 @@
     img.avatar {
       max-width: 45px;
     }
-
-    //.lightbox-wrapper {
-    //  display: none;
-    //}
   }
-
 
   // Hide the header image so it doesn't display twice
   .header-image {
@@ -139,47 +134,22 @@
     }
   }
 
-  //.topic-avatar,
-  //.topic-body {
-  //  border-top: none;
-  //}
-
-  //.topic-avatar {
-  //  float: none;
-  //}
-
   .topic-body {
     padding-left: 0;
     padding-right: 0;
     width: 100%;
   }
 
-  //.topic-avatar,
   .topic-body .regular {
     padding-top: 0;
     margin-top: 0;
   }
 
-  //.topic-meta-data {
-  //  position: absolute;
-  //  top: -32px;
-  //  left: 54px;
-  //  .names {
-  //    margin-left: 0;
-  //  }
-  //}
-
-  // background image
   .bg-container {
     position: absolute;
     left: 0;
     right: 0;
   }
-
-  // Hide the default title
-  //.fancy-title {
-  //  display: none;
-  //}
 
   .posts {
     position: relative;
@@ -255,10 +225,6 @@
     display: inline;
   }
 
-  .header-image {
-    //display: none;
-  }
-
   #suggested-topics {
     font-size: 0.8889em;
 
@@ -281,14 +247,4 @@
       width: 16%;
     }
   }
-
 }
-
-//.mobile-view .blog-post {
-//  .topic-meta-data {
-//    position: absolute;
-//    top: 29px;
-//    left: 0;
-//  }
-//}
-
