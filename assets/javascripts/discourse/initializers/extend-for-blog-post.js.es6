@@ -123,7 +123,8 @@ export default {
             imageHeight = $firstImage.attr('height'),
             imageRatio = imageHeight / imageWidth,
             imageMaxHeight = 472,
-            imageComputedHeight = imageMaxHeight < imageWidth * imageRatio ? imageMaxHeight : imageWidth * imageRatio;
+            windowWidth = $('#main-outlet').width(),
+            imageComputedHeight = imageMaxHeight < windowWidth * imageRatio ? imageMaxHeight : windowWidth * imageRatio;
 
           $('.bg-container').css({
             'height': imageComputedHeight + 'px',
