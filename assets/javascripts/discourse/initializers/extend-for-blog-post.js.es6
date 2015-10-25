@@ -112,7 +112,6 @@ export default {
       },
 
       didInsertElement: function () {
-        console.log("POST VIEW")
         this._addBlogBodyClass();
         let bgImages = this.get('bgImages');
         if (bgImages) {
