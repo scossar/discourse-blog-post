@@ -99,9 +99,8 @@
 
     // Elements
     img {
-      width: 100%;
+      max-width: 100%;
       height: auto;
-      max-width: none;
     }
     figure {
       margin: 0;
@@ -226,7 +225,8 @@
   }
 
   #suggested-topics {
-    font-size: 0.8889em;
+    //font-size: 0.8889em;
+    font-size: 14px;
 
     .topic-list th:first-of-type, .topic-list td:first-of-type {
       padding-left: 0;
@@ -247,4 +247,9 @@
       width: 16%;
     }
   }
+}
+
+// Adjust to header height
+.mobile-view .blog-post #main-outlet {
+  padding-top: 57px;
 }

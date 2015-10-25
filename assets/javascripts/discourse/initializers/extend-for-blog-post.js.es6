@@ -6,12 +6,14 @@ export default {
   name: 'extend-for-blog-post',
 
   initialize() {
+
     TopicController.reopen({
 
       blogCategory: function () {
         return this.siteSettings.blog_post_category;
       }.property(),
 
+      // Can the input be validated somewhere first?
       blogCategoryClass: function () {
         return this.get('blogCategory').replace(/ /g, '-');
       }.property('blogCategory'),
@@ -21,13 +23,13 @@ export default {
         return this.get('blogCategoryClass') === currentCategory;
       }.property('model.category.fullSlug'),
 
-      topicTitle: function () {
-        const topicTitle = this.get('model.fancy_title');
-        if (!topicTitle) {
-          return;
-        }
-        return topicTitle;
-      }.property('model.fancy_title'),
+      //topicTitle: function () {
+      //  const topicTitle = this.get('model.fancy_title');
+      //  if (!topicTitle) {
+      //    return;
+      //  }
+      //  return topicTitle;
+      //}.property('model.fancy_title'),
 
       postDate: function () {
         return new Date(this.get('model.created_at')).toLocaleDateString();
@@ -79,16 +81,17 @@ export default {
           $('body').removeClass('blog-post');
         }
       }.on('willDestroyElement'),
+
     });
 
     PostView.reopen({
-      blogCategory: Em.computed.alias('controller.blogCategory'),
-      blogCategoryClass: Em.computed.alias('controller.blogCategoryClass'),
+      //blogCategory: Em.computed.alias('controller.blogCategory'),
+      //blogCategoryClass: Em.computed.alias('controller.blogCategoryClass'),
       isBlog: Em.computed.alias('controller.isBlog'),
-      hasBgImg: Em.computed.alias('controller.hasBgImg'),
-      postDate: Em.computed.alias('controller.postDate'),
-      firstPoster: Em.computed.alias('controller.firstPoster'),
-      cooked: Em.computed.alias('controller.cooked'),
+      //hasBgImg: Em.computed.alias('controller.hasBgImg'),
+      //postDate: Em.computed.alias('controller.postDate'),
+      //firstPoster: Em.computed.alias('controller.firstPoster'),
+      //cooked: Em.computed.alias('controller.cooked'),
       bgImages: Em.computed.alias('controller.bgImages'),
 
       _addBlogBodyClass: function () {
@@ -98,7 +101,7 @@ export default {
       },
 
       _resizeBackground: function (event) {
-        var imgWidth = $('#main-outlet').width(),
+        let imgWidth = $('#main-outlet').width(),
           newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
 
         $('.bg-container').css('height', newHeight + 'px');
@@ -122,7 +125,6 @@ export default {
             imageWidth = $firstImage.attr('width'),
             imageHeight = $firstImage.attr('height'),
             imageRatio = imageHeight / imageWidth,
-          //imageMaxHeight = 472,
             imageMaxHeight = $firstImage.data('max-height') || 472,
             windowWidth = $('#main-outlet').width(),
             imageComputedHeight = imageMaxHeight < windowWidth * imageRatio ? imageMaxHeight : windowWidth * imageRatio;
@@ -131,7 +133,8 @@ export default {
             'height': imageComputedHeight + 'px',
             'background-image': 'url(' + imageUrl + ')',
             'background-repeat': 'no-repeat',
-            'background-size': '100% auto'
+            'background-size': '100% auto',
+            //'visibility': 'visible'
           });
 
           $('.large-title').css({
@@ -143,11 +146,20 @@ export default {
         }
       },
 
-      removeBlogBodyClass: function () {
+      removeBlog: function () {
         if (this.get('isBlog')) {
           $('body').removeClass('blog-post');
+          $('.large-title').css({
+            'visibility': 'hidden',
+            'padding-top': 0
+          });
+          $('.bg-container').css({
+            'height': 0,
+            'background': 'none',
+          });
         }
       }.on('willDestroyElement'),
+
     });
   }
 }
