@@ -23,14 +23,6 @@ export default {
         return this.get('blogCategoryClass') === currentCategory;
       }.property('model.category.fullSlug'),
 
-      //topicTitle: function () {
-      //  const topicTitle = this.get('model.fancy_title');
-      //  if (!topicTitle) {
-      //    return;
-      //  }
-      //  return topicTitle;
-      //}.property('model.fancy_title'),
-
       postDate: function () {
         return new Date(this.get('model.created_at')).toLocaleDateString();
       }.property('model.created_at'),
@@ -85,13 +77,7 @@ export default {
     });
 
     PostView.reopen({
-      //blogCategory: Em.computed.alias('controller.blogCategory'),
-      //blogCategoryClass: Em.computed.alias('controller.blogCategoryClass'),
       isBlog: Em.computed.alias('controller.isBlog'),
-      //hasBgImg: Em.computed.alias('controller.hasBgImg'),
-      //postDate: Em.computed.alias('controller.postDate'),
-      //firstPoster: Em.computed.alias('controller.firstPoster'),
-      //cooked: Em.computed.alias('controller.cooked'),
       bgImages: Em.computed.alias('controller.bgImages'),
 
       _addBlogBodyClass: function () {
@@ -134,7 +120,6 @@ export default {
             'background-image': 'url(' + imageUrl + ')',
             'background-repeat': 'no-repeat',
             'background-size': '100% auto',
-            //'visibility': 'visible'
           });
 
           $('.large-title').css({
@@ -159,7 +144,6 @@ export default {
           });
         }
       }.on('willDestroyElement'),
-
     });
   }
 }
