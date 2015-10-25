@@ -85,6 +85,15 @@
       margin-bottom: 0;
     }
 
+    nav.post-controls {
+      box-sizing: content-box;
+      font-size: 14px;
+    }
+
+    #share-link {
+      box-sizing: content-box;
+    }
+
     color: #666 !important;
 
     h1, h2, h3, h4 {
@@ -109,24 +118,35 @@
     }
   }
 
-  // Classes
-  .large-title-container h1 {
-    //border-bottom: 1px solid #ddd;
-  }
 
   // Hide the header image so it doesn't display twice
   .header-image {
     display: none;
   }
 
-  .topic-avatar,
-  .topic-body {
-    border-top: none;
+  .large-title {
+    .post-metadata {
+      font-size: 0.8889em;
+      margin-top: 15px;
+    }
+    .post-metadata .author,
+    .post-metadata .date {
+      margin-bottom: 0 !important; // fix this
+    }
+    .post-author,
+    .post-date {
+      font-weight: bold;
+    }
   }
 
-  .topic-avatar {
-    float: none;
-  }
+  //.topic-avatar,
+  //.topic-body {
+  //  border-top: none;
+  //}
+
+  //.topic-avatar {
+  //  float: none;
+  //}
 
   .topic-body {
     padding-left: 0;
@@ -134,20 +154,20 @@
     width: 100%;
   }
 
-  .topic-avatar,
+  //.topic-avatar,
   .topic-body .regular {
     padding-top: 0;
     margin-top: 0;
   }
 
-  .topic-meta-data {
-    position: absolute;
-    top: -32px;
-    left: 54px;
-    .names {
-      margin-left: 0;
-    }
-  }
+  //.topic-meta-data {
+  //  position: absolute;
+  //  top: -32px;
+  //  left: 54px;
+  //  .names {
+  //    margin-left: 0;
+  //  }
+  //}
 
   // background image
   .bg-container {
@@ -157,9 +177,9 @@
   }
 
   // Hide the default title
-  .fancy-title {
-    display: none;
-  }
+  //.fancy-title {
+  //  display: none;
+  //}
 
   .posts {
     position: relative;
@@ -190,7 +210,8 @@
     }
   }
 
-  .posts {
+  .posts,
+  .large-title {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -208,7 +229,7 @@
 
   #topic-footer-buttons {
     padding: 13px;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   blockquote {
