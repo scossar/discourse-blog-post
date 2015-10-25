@@ -1,5 +1,4 @@
 .blog-post {
-
   #main-outlet {
 
     // Things to hide
@@ -15,10 +14,12 @@
     .topic-avatar,
     .topic-meta-data,
     .notification-options,
+    .lightbox-wrapper,
     .posts button.create {
       display: none;
     }
 
+    // *:after is 'inherit', set box-sizing to 'content-box' anywhere 'border-box' is causing problems
     box-sizing: border-box;
     *, *:before, *:after {
       box-sizing: inherit;
@@ -90,10 +91,6 @@
       font-size: 14px;
     }
 
-    #share-link {
-      box-sizing: content-box;
-    }
-
     color: #666 !important;
 
     h1, h2, h3, h4 {
@@ -113,9 +110,9 @@
       max-width: 45px;
     }
 
-    .lightbox-wrapper {
-      display: none;
-    }
+    //.lightbox-wrapper {
+    //  display: none;
+    //}
   }
 
 
@@ -125,6 +122,7 @@
   }
 
   .large-title {
+    // hidden here and made visible with js in the topic view
     visibility: hidden;
     .post-metadata {
       font-size: 0.8889em;
@@ -234,6 +232,10 @@
     font-size: 14px;
   }
 
+  #share-link {
+    box-sizing: content-box;
+  }
+
   blockquote {
     background: #f9f9f9;
     color: #777;
@@ -258,7 +260,7 @@
   }
 
   #suggested-topics {
-    font-size: 0.75em;
+    font-size: 0.8889em;
 
     .topic-list th:first-of-type, .topic-list td:first-of-type {
       padding-left: 0;
@@ -282,11 +284,11 @@
 
 }
 
-.mobile-view .blog-post {
-  .topic-meta-data {
-    position: absolute;
-    top: 29px;
-    left: 0;
-  }
-}
+//.mobile-view .blog-post {
+//  .topic-meta-data {
+//    position: absolute;
+//    top: 29px;
+//    left: 0;
+//  }
+//}
 
