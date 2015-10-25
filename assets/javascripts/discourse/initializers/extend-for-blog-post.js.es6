@@ -1,9 +1,23 @@
 import PostView from 'discourse/views/post'
 import TopicController from 'discourse/controllers/topic';
 
-function helloFrom(location) {
-  console.log('Hello from ', location);
+// This shoud be a mixin
+
+function resizeBackground(event) {
+  var imgWidth = $('#main-outlet').width(),
+    newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
+
+  $('.bg-container').css('height', newHeight + 'px');
+  $('.large-title').css('padding-top', newHeight + 'px');
 }
+
+function adjustForResize(maxHeight, imgRatio) {
+  $(window).on('resize', {
+    bgMaxHeight: maxHeight,
+    bgRatio: imgRatio
+  }, resizeBackground);
+}
+
 
 export default {
   name: 'extend-for-blog-post',
@@ -93,7 +107,7 @@ export default {
             imageHeight = $firstImage.attr('height'),
             imageRatio = imageHeight / imageWidth,
             imageMaxHeight = 472,
-            imageComputedHeight = imageMaxHeight > imageWidth * imageRatio ? imageMaxHeight : imageWidth * imageRatio;
+            imageComputedHeight = imageMaxHeight < imageWidth * imageRatio ? imageMaxHeight : imageWidth * imageRatio;
 
           $('.bg-container').css({
             'height': imageComputedHeight + 'px',
@@ -105,6 +119,8 @@ export default {
           $('.large-title').css({
             'padding-top': imageComputedHeight + 'px'
           });
+
+          adjustForResize(imageMaxHeight, imageRatio);
         }
       },
 
@@ -113,8 +129,6 @@ export default {
           $('body').removeClass('blog-post');
         }
       }.on('willDestroyElement'),
-
-
     });
   }
 }
