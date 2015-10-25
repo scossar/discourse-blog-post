@@ -69,9 +69,7 @@ export default {
       }.on('didInsertElement'),
 
       removeBlogBodyClass: function () {
-        if (this.get('isBlog')) {
-          $('body').removeClass('blog-post');
-        }
+        $('body').removeClass('blog-post');
       }.on('willDestroyElement'),
 
     });
@@ -132,17 +130,15 @@ export default {
       },
 
       removeBlog: function () {
-        if (this.get('isBlog')) {
-          $('body').removeClass('blog-post');
-          $('.large-title').css({
-            'visibility': 'hidden',
-            'padding-top': 0
-          });
-          $('.bg-container').css({
-            'height': 0,
-            'background': 'none',
-          });
-        }
+        $('body').removeClass('blog-post');
+        $('.large-title').css({
+          'visibility': 'hidden',
+          'padding-top': 0
+        });
+        $('.bg-container').css({
+          'height': 0,
+          'background': 'none',
+        });
       }.on('willDestroyElement'),
     });
   }
