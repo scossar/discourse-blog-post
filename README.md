@@ -4,6 +4,7 @@ This plugin is for adding a blog-post category to Discourse. The blog post categ
 may be styled separately from the other Discourse categories.
 
 ![alt tag](https://cloud.githubusercontent.com/assets/2975917/10718114/f17f1dec-7b27-11e5-8efd-28a65c00bb53.png)
+![alt tag](https://cloud.githubusercontent.com/assets/2975917/10718116/fa4ac7e6-7b27-11e5-81fe-edb8614c540b.png)
 
 ### Installation
 
