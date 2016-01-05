@@ -13,19 +13,17 @@
     .title-wrapper .edit-topic,
     .post-info,
     .post-info.edits,
-    .reply-new,
-    //#topic-title,
-    //.fancy-title,
     .topic-avatar,
     .title-wrapper .badge-wrapper,
     .topic-meta-data,
     .notification-options,
-    //.lightbox-wrapper,
-    .posts button.create {
+    .posts button.create,
+    .header-image, // hide the header image so it doesn't display twice
+    .header-image + .meta {
       display: none;
     }
 
-    // *:after is 'inherit', set box-sizing to 'content-box' anywhere 'border-box' is causing problems
+    // set box-sizing to 'content-box' anywhere 'border-box' is causing problems
     box-sizing: border-box;
     *, *:before, *:after {
       box-sizing: inherit;
@@ -39,102 +37,45 @@
     // Positions top of background image - adjust for header height
     padding-top: 60px;
 
-    // Text color, style, and rhythm
+    // Base - elements without a class
     font-size: 18px;
-
-    .gutter {
-      //font-size: 0.8889em;
-      //line-height: 1em;
-      //margin-bottom: 0;
-    }
-
-    figcaption {
-      //font-size: 0.8889em;
-      //line-height: 1em;
-    }
-
-    .posted-at {
-      //font-size: 0.618em;
-      //line-height: 1;
-    }
+    color: #666 !important;
 
     p {
       font-size: 1em;
       line-height: 1.4em;
-      //margin: 0 0 1.4em 0;
     }
-
-    h4, blockquote {
-      //font-size: 1.1667em;
-      //line-height: 1.2857em;
-      //margin-top: 1.2857em;
-      //margin-bottom: 1.2857em;
-    }
-
-    h3 {
-      //font-size: 1.3333em;
-      //line-height: 1.1250em;
-      //margin-top: 1.1250em;
-      //margin-bottom: 13px;
-    }
-
-    h2 {
-      //font-size: 2em;
-      //line-height: 1.5em;
-      //margin-top: 0.75em;
-      //margin-bottom: 0;
-    }
-
-    h1 {
-      //font-size: 2.6667em;
-      //line-height: 1.125em;
-      //margin-top: 0.5625em;
-      //margin-bottom: 0;
-    }
-
-    nav.post-controls {
-      //box-sizing: content-box;
-      //font-size: 14px;
-    }
-
-    color: #666 !important;
 
     h1, h2, h3, h4 {
-      color: #333 !important;
+      color: #444 !important;
     }
 
-    // Elements
     img {
       max-width: 100%;
       height: auto;
     }
+
     figure {
       margin: 0;
     }
+
     img.avatar {
       max-width: 45px;
     }
   }
 
-  // Hide the header image so it doesn't display twice
-  .header-image {
-    display: none;
-  }
+  // Classes
 
-  // Hide the hidden header-image's metadata
-  .header-image + .meta {
-    display: none;
+  // holds the background image if there is one
+  .bg-container {
+    position: absolute;
+    left: 0;
+    right: 0;
   }
 
   .topic-avatar {
     border-top: none;
   }
-
-  //.topic-meta-data {
-  //  margin-left: 50px;
-  //  position: relative;
-  //  top: -44px;
-  //}
 
   .title-wrapper {
     @include clearfix;
@@ -163,12 +104,6 @@
     margin-top: 0;
   }
 
-  .bg-container {
-    position: absolute;
-    left: 0;
-    right: 0;
-  }
-
   .posts {
     position: relative;
   }
@@ -185,28 +120,29 @@
 
   .large-letter {
     // <span class="large-letter"></span> is a whitelisted tag
+    // this could be given some better custom styling
     font-size: 36px;
   }
 
   // This is the 'reply as linked topic' area - move it to the bottom for now.
-  //.gutter {
-  //  position: relative;
-  //  left: 0;
-  //  bottom: 100%;
-  //  width: 66%;
-  //  padding-left: 0;
-  //  display: block !important;
+  .gutter {
+    position: relative;
+    left: 0;
+    bottom: 100%;
+    width: 66%;
+    padding-left: 0;
+    display: block !important;
 
-    //.track-link {
-      // without the padding it disappears.
-      //padding-left: 1px;
-    //}
-    //.reply-new {
-    //  padding-left: 18px;
-    //  padding-bottom: 13px;
-    //  opacity: 1 !important;
-    //}
-  //}
+    .track-link {
+       //without the padding it disappears.
+      padding-left: 1px;
+    }
+    .reply-new {
+      padding-left: 18px;
+      padding-bottom: 13px;
+      opacity: 1 !important;
+    }
+  }
 
   .posts,
   #topic-title {
