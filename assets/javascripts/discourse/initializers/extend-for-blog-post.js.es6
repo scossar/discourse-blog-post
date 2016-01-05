@@ -57,6 +57,14 @@ export default {
         return bgImages.length;
       }.property('bgImages'),
 
+      topicPost: function () {
+        const posts = this.get('model.postStream.posts');
+        if (!posts) {
+          return;
+        }
+        return posts[0];
+      }.property('model.postStream.posts')
+
     });
 
     TopicView.reopen({
@@ -89,7 +97,7 @@ export default {
           newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
 
         $('.bg-container').css('height', newHeight + 'px');
-        $('.large-title').css('padding-top', newHeight + 'px');
+        $('#topic-title').css('margin-top', newHeight + 'px');
       },
 
       _adjustForResize: function (maxHeight, imgRatio) {
@@ -104,6 +112,8 @@ export default {
         this._addBlogBodyClass();
         let bgImages = this.get('bgImages');
         if (bgImages) {
+          // remove margins from empty p tags
+          this.$().find('p:empty').css('margin', 0);
           let $firstImage = $(bgImages[0]),
             imageUrl = $firstImage.attr('src'),
             imageWidth = $firstImage.attr('width'),
@@ -120,9 +130,9 @@ export default {
             'background-size': '100% auto',
           });
 
-          $('.large-title').css({
-            'visibility': 'visible',
-            'padding-top': imageComputedHeight + 'px'
+          $('#topic-title').css({
+            //'visibility': 'visible',
+            'margin-top': imageComputedHeight + 'px'
           });
 
           this._adjustForResize(imageMaxHeight, imageRatio);
@@ -131,9 +141,9 @@ export default {
 
       removeBlog: function () {
         $('body').removeClass('blog-post');
-        $('.large-title').css({
+        $('#topic-title').css({
           'visibility': 'hidden',
-          'padding-top': 0
+          'margin-top': 0
         });
         $('.bg-container').css({
           'height': 0,

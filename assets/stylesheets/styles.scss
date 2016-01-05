@@ -1,4 +1,8 @@
 .blog-post {
+  .profiler-results {
+    display: none;
+  }
+
   #main-outlet {
 
     // Things to hide
@@ -9,12 +13,14 @@
     .title-wrapper .edit-topic,
     .post-info,
     .post-info.edits,
-    #topic-title,
-    .fancy-title,
+    .reply-new,
+    //#topic-title,
+    //.fancy-title,
     .topic-avatar,
+    .title-wrapper .badge-wrapper,
     .topic-meta-data,
     .notification-options,
-    .lightbox-wrapper,
+    //.lightbox-wrapper,
     .posts button.create {
       display: none;
     }
@@ -37,58 +43,58 @@
     font-size: 18px;
 
     .gutter {
-      font-size: 0.8889em;
-      line-height: 1em;
-      margin-bottom: 0;
+      //font-size: 0.8889em;
+      //line-height: 1em;
+      //margin-bottom: 0;
     }
 
     figcaption {
-      font-size: 0.8889em;
-      line-height: 1em;
+      //font-size: 0.8889em;
+      //line-height: 1em;
     }
 
     .posted-at {
-      font-size: 0.618em;
-      line-height: 1;
+      //font-size: 0.618em;
+      //line-height: 1;
     }
 
     p {
       font-size: 1em;
-      line-height: 1.5em;
-      margin: 0 0 1.5em 0;
+      line-height: 1.4em;
+      //margin: 0 0 1.4em 0;
     }
 
     h4, blockquote {
-      font-size: 1.1667em;
-      line-height: 1.2857em;
-      margin-top: 1.2857em;
-      margin-bottom: 1.2857em;
+      //font-size: 1.1667em;
+      //line-height: 1.2857em;
+      //margin-top: 1.2857em;
+      //margin-bottom: 1.2857em;
     }
 
     h3 {
-      font-size: 1.3333em;
-      line-height: 1.1250em;
-      margin-top: 1.1250em;
-      margin-bottom: 13px;
+      //font-size: 1.3333em;
+      //line-height: 1.1250em;
+      //margin-top: 1.1250em;
+      //margin-bottom: 13px;
     }
 
     h2 {
-      font-size: 2em;
-      line-height: 1.5em;
-      margin-top: 0.75em;
-      margin-bottom: 0;
+      //font-size: 2em;
+      //line-height: 1.5em;
+      //margin-top: 0.75em;
+      //margin-bottom: 0;
     }
 
     h1 {
-      font-size: 2.6667em;
-      line-height: 1.125em;
-      margin-top: 0.5625em;
-      margin-bottom: 0;
+      //font-size: 2.6667em;
+      //line-height: 1.125em;
+      //margin-top: 0.5625em;
+      //margin-bottom: 0;
     }
 
     nav.post-controls {
-      box-sizing: content-box;
-      font-size: 14px;
+      //box-sizing: content-box;
+      //font-size: 14px;
     }
 
     color: #666 !important;
@@ -115,28 +121,41 @@
     display: none;
   }
 
-  .large-title {
-    // hidden here and made visible with js in the topic view
-    visibility: hidden;
-    .post-metadata {
-      font-size: 0.8889em;
-      margin-top: 15px;
-      padding-left: 5px;
-    }
-    .post-metadata .author,
-    .post-metadata .date {
-      margin-bottom: 0 !important; // fix this
-    }
-    .post-author,
-    .post-date {
+  // Hide the hidden header-image's metadata
+  .header-image + .meta {
+    display: none;
+  }
+
+  .topic-avatar {
+    border-top: none;
+  }
+
+  //.topic-meta-data {
+  //  margin-left: 50px;
+  //  position: relative;
+  //  top: -44px;
+  //}
+
+  .title-wrapper {
+    @include clearfix;
+  }
+
+  .topic-poster {
+    @include clearfix;
+    float: left;
+    margin-top: 8px;
+    font-size: 0.8em;
+    .poster-details {
       font-weight: bold;
     }
   }
 
   .topic-body {
-    padding-left: 0;
+    padding-top: 0;
     padding-right: 0;
+    padding-left: 0;
     width: 100%;
+    border-top: none;
   }
 
   .topic-body .regular {
@@ -154,33 +173,43 @@
     position: relative;
   }
 
+  #user-card {
+    box-sizing: content-box;
+    font-size: 14px;
+    .card-huge-avatar img.avatar {
+      max-width: none;
+      width: 120px !important;
+      height: 120px !important;
+    }
+  }
+
   .large-letter {
     // <span class="large-letter"></span> is a whitelisted tag
     font-size: 36px;
   }
 
   // This is the 'reply as linked topic' area - move it to the bottom for now.
-  .gutter {
-    position: relative;
-    left: 0;
-    bottom: 100%;
-    width: 66%;
-    padding-left: 0;
-    display: block !important;
+  //.gutter {
+  //  position: relative;
+  //  left: 0;
+  //  bottom: 100%;
+  //  width: 66%;
+  //  padding-left: 0;
+  //  display: block !important;
 
-    .track-link {
+    //.track-link {
       // without the padding it disappears.
-      padding-left: 1px;
-    }
-    .reply-new {
-      padding-left: 18px;
-      padding-bottom: 13px;
-      opacity: 1 !important;
-    }
-  }
+      //padding-left: 1px;
+    //}
+    //.reply-new {
+    //  padding-left: 18px;
+    //  padding-bottom: 13px;
+    //  opacity: 1 !important;
+    //}
+  //}
 
   .posts,
-  .large-title {
+  #topic-title {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -189,6 +218,10 @@
       width: 66%;
       max-width: none;
     }
+  }
+
+  #topic-title {
+    margin-top: 16px;
   }
 
   // Get rid of the initial blue flash
@@ -210,7 +243,7 @@
     color: #777;
     border-left: 10px solid #ccc;
     padding: 0.5em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
+    quotes: "\201C" "\201D" "\2018" "\2019";
   }
   blockquote:before {
     color: #ccc;
