@@ -1,4 +1,5 @@
-.blog-post {
+.blog-post,
+.mobile-view .blog-post {
   .profiler-results {
     display: none;
   }
@@ -44,6 +45,7 @@
     p {
       font-size: 1em;
       line-height: 1.4em;
+      margin-top: 0;
     }
 
     h1, h2, h3, h4 {
@@ -54,6 +56,10 @@
       max-width: 100%;
       height: auto;
     }
+     p img,
+     .lightbox-wrapper img {
+       margin-bottom: 1em;
+     }
 
     figure {
       margin: 0;
@@ -153,6 +159,8 @@
     @media (min-width: 768px) {
       width: 66%;
       max-width: none;
+      margin-left: auto !important; // overrides !important in mobile.scss
+      margin-right: auto !important;
     }
   }
 

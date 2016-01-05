@@ -27,14 +27,6 @@ export default {
         return new Date(this.get('model.created_at')).toLocaleDateString();
       }.property('model.created_at'),
 
-      postedBy: function () {
-        const poster = this.get('model.details.created_by.username');
-        if (!poster) {
-          return;
-        }
-        return poster;
-      }.property('model.details.created_by.username'),
-
       cooked: function () {
         const posts = this.get('model.postStream.posts');
         if (!posts) {
@@ -97,7 +89,7 @@ export default {
           newHeight = (event.data.bgMaxHeight < imgWidth * event.data.bgRatio) ? event.data.bgMaxHeight : imgWidth * event.data.bgRatio;
 
         $('.bg-container').css('height', newHeight + 'px');
-        $('#topic-title').css('margin-top', newHeight + 'px');
+        $('#topic-title').css('padding-top', newHeight + 'px');
       },
 
       _adjustForResize: function (maxHeight, imgRatio) {
@@ -106,7 +98,6 @@ export default {
           bgRatio: imgRatio
         }, this._resizeBackground);
       },
-
 
       didInsertElement: function () {
         this._addBlogBodyClass();
@@ -131,8 +122,7 @@ export default {
           });
 
           $('#topic-title').css({
-            //'visibility': 'visible',
-            'margin-top': imageComputedHeight + 'px'
+            'padding-top': imageComputedHeight + 'px'
           });
 
           this._adjustForResize(imageMaxHeight, imageRatio);
@@ -143,7 +133,7 @@ export default {
         $('body').removeClass('blog-post');
         $('#topic-title').css({
           'visibility': 'hidden',
-          'margin-top': 0
+          'padding-top': 0
         });
         $('.bg-container').css({
           'height': 0,
