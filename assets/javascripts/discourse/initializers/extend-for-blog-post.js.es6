@@ -70,8 +70,7 @@ export default {
 
       removeBlogBodyClass: function () {
         $('body').removeClass('blog-post');
-      }.on('willDestroyElement'),
-
+      }.on('willDestroyElement')
     });
 
     PostView.reopen({
@@ -99,12 +98,20 @@ export default {
         }, this._resizeBackground);
       },
 
-      didInsertElement: function () {
-        this._addBlogBodyClass();
+      renderBlog: function () {
         let bgImages = this.get('bgImages');
+
+        this._addBlogBodyClass();
+
+        if (this.get('isBlog')) {
+          // Creating the markup for the posts can add a lot of <br> tags
+          this.$().find('br').remove();
+        }
+
         if (bgImages) {
-          // remove margins from empty p tags
-          this.$().find('p:empty').css('margin', 0);
+          // Remove the header image markup
+          this.$().find('.header-image').remove();
+          this.$().find('p:empty').remove();
           let $firstImage = $(bgImages[0]),
             imageUrl = $firstImage.attr('src'),
             imageWidth = $firstImage.attr('width'),
@@ -118,7 +125,7 @@ export default {
             'height': imageComputedHeight + 'px',
             'background-image': 'url(' + imageUrl + ')',
             'background-repeat': 'no-repeat',
-            'background-size': '100% auto',
+            'background-size': '100% auto'
           });
 
           $('#topic-title').css({
@@ -127,19 +134,18 @@ export default {
 
           this._adjustForResize(imageMaxHeight, imageRatio);
         }
-      },
+      }.on('didInsertElement', 'postViewUpdated'),
 
       removeBlog: function () {
         $('body').removeClass('blog-post');
         $('#topic-title').css({
-          'visibility': 'hidden',
           'padding-top': 0
         });
         $('.bg-container').css({
           'height': 0,
-          'background': 'none',
+          'background': 'none'
         });
-      }.on('willDestroyElement'),
+      }.on('willDestroyElement')
     });
   }
 }

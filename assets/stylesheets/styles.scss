@@ -41,11 +41,10 @@
     // Base - elements without a class
     font-size: 18px;
     color: #666 !important;
+    line-height: 1.4em;
 
     p {
       font-size: 1em;
-      line-height: 1.4em;
-      margin-top: 0;
     }
 
     h1, h2, h3, h4 {
@@ -63,6 +62,12 @@
 
     figure {
       margin: 0;
+    }
+
+    figcaption {
+      margin-top: -16px;
+      font-size: 0.8em;
+      font-weight: bold;
     }
 
     img.avatar {
@@ -107,11 +112,6 @@
     padding-left: 0;
     width: 100%;
     border-top: none;
-  }
-
-  .topic-body .regular {
-    padding-top: 0;
-    margin-top: 0;
   }
 
   .posts {
