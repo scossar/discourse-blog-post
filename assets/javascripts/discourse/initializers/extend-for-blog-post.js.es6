@@ -103,11 +103,6 @@ export default {
 
         this._addBlogBodyClass();
 
-        if (this.get('isBlog')) {
-          // Creating the markup for the posts can add a lot of <br> tags
-          this.$().find('br').remove();
-        }
-
         if (bgImages) {
           // Remove the header image markup
           this.$().find('.header-image').remove();
