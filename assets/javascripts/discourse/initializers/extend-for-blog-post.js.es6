@@ -129,7 +129,7 @@ export default {
 
           this._adjustForResize(imageMaxHeight, imageRatio);
         }
-      }.on('didInsertElement', 'postViewUpdated'),
+      }.on('didInsertElement'),
 
       removeBlog: function () {
         $('body').removeClass('blog-post');
