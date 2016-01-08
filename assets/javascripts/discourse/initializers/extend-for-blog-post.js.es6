@@ -106,7 +106,8 @@ export default {
         if (bgImages) {
           // Remove the header image markup
           this.$().find('.header-image').remove();
-          this.$().find('p:empty').remove();
+          //this.$().find('p:empty').remove();
+          this.$().find('p:empty').css('margin', '0');
           let $firstImage = $(bgImages[0]),
             imageUrl = $firstImage.attr('src'),
             imageWidth = $firstImage.attr('width'),
