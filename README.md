@@ -1,5 +1,7 @@
 ## Discourse Blog Post
 
+*note: This plugin is broken. It has not been updated to use the Discourse plugin api. This is example code only.*
+
 This plugin is for adding a blog-post category to Discourse. The blog post category
 may be styled separately from the other Discourse categories.
 
