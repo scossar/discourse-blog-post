@@ -1,5 +1,7 @@
 # name: discourse-blog-post
 
+register_asset 'stylesheets/blog-post-styles.scss'
+
 PLUGIN_NAME = 'discourse_blog_post'.freeze
 
 after_initialize do
@@ -15,10 +17,26 @@ after_initialize do
   class DiscourseBlogPost::BlogPostController < ::ApplicationController
 
     def mark_as_blog_post
+      post = Post.find(params[:id].to_i)
+
+      post.custom_fields['is_blog_post'] = 'true'
+      post.topic.custom_fields['blog_post_id'] = post.id
+
+      post.save!
+      post.topic.save!
+
       render json: success_json
     end
 
     def unmark_as_blog_post
+      post = Post.find(params[:id].to_i)
+
+      post.custom_fields['is_blog_post'] = nil
+      post.topic.custom_fields['blog_post_id'] = nil
+
+      post.save!
+      post.topic.save!
+
       render json: success_json
     end
   end
@@ -61,14 +79,47 @@ after_initialize do
     end
   end
 
-  require_dependency 'category_serializer'
+  # Add the 'blog_posts_enabled' attribute to categories.
+  require_dependency 'basic_category_serializer'
   class ::BasicCategorySerializer
     attributes :blog_posts_enabled
 
     def blog_posts_enabled
-      scope.allow_blog_posts_in_category?(object.id)
+      scope && scope.allow_blog_posts_in_category?(object.id)
     end
   end
+
+
+  TopicView.add_post_custom_fields_whitelister do |user|
+    ['is_blog_post']
+  end
+
+  require_dependency 'topic_view_serializer'
+  class ::TopicViewSerializer
+    attributes :has_blog_post
+
+    def has_blog_post
+      blog_post_id ? true : false
+    end
+
+    def blog_post_id
+      id = object.topic.custom_fields['blog_post_id']
+
+      id && id.to_i rescue nil
+    end
+  end
+
+  require_dependency 'post_serializer'
+  class ::PostSerializer
+    attributes :is_blog_post
+
+    def is_blog_post
+      post_custom_fields['is_blog_post'] == 'true'
+    end
+  end
+
+
+  TopicList.preloaded_custom_fields << 'blog_post_id' if TopicList.respond_to? :preloaded_custom_fields
 
 
 end
