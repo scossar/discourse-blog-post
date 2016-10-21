@@ -118,8 +118,5 @@ after_initialize do
     end
   end
 
-
   TopicList.preloaded_custom_fields << 'blog_post_id' if TopicList.respond_to? :preloaded_custom_fields
-
-
 end

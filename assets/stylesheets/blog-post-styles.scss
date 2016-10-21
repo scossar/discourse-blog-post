@@ -1,13 +1,19 @@
 button.widget-button.not-blog-post-icon {
-  color: blue;
-}
-
-button.widget-button.not-blog-post-icon.no-text::after {
-  content: " convert to blog post";
   font-size: small;
 }
 
-button.widget-button.blog-post-icon.no-text::after {
-  content: " convert to regular post";
+button.widget-button.not-blog-post-icon i::before {
+  font-size: 16px;
+  padding-right: 4px;
+}
+
+button.widget-button.blog-post-icon {
   font-size: small;
 }
+
+button.widget-button.blog-post-icon i::before {
+  color: gold;
+  font-size: 16px;
+  padding-right: 4px;
+}
+

@@ -36,23 +36,24 @@ function initializeWithApi(api) {
   api.includePostAttributes('is_blog_post');
 
   api.addPostMenuButton('blogPost', attrs => {
-    console.log('attrs', attrs);
 
     if (attrs.firstPost) {
       if (attrs.is_blog_post) {
         return {
           action: 'unmarkAsBlogPost',
-          icon: 'star',
+          icon: 'pencil-square',
           className: 'blog-post-icon',
           title: 'blog_post.convert_to_regular_post',
+          label: 'blog_post.convert_to_regular_post',
           position: 'first'
         }
       } else {
         return {
           action: 'markAsBlogPost',
-          icon: 'star',
+          icon: 'pencil-square-o',
           className: 'not-blog-post-icon',
           title: 'blog_post.convert_to_blog_post',
+          label: 'blog_post.convert_to_blog_post',
           position: 'first'
         }
       }
@@ -76,6 +77,7 @@ function initializeWithApi(api) {
 
     current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
   });
+
 
 }
 

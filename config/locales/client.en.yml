@@ -1,0 +1,5 @@
+en:
+  js:
+    blog_post:
+      convert_to_blog_post: "Convert to blog post"
+      convert_to_regular_post: "Convert to regular post"
