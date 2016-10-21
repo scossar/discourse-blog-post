@@ -41,6 +41,7 @@ function initializeWithApi(api) {
     if (attrs.firstPost) {
       if (attrs.is_blog_post) {
         return {
+          action: 'unmarkAsBlogPost',
           icon: 'star',
           className: 'blog-post-icon',
           title: 'blog_post.convert_to_regular_post',
@@ -48,6 +49,7 @@ function initializeWithApi(api) {
         }
       } else {
         return {
+          action: 'markAsBlogPost',
           icon: 'star',
           className: 'not-blog-post-icon',
           title: 'blog_post.convert_to_blog_post',
@@ -55,6 +57,24 @@ function initializeWithApi(api) {
         }
       }
     }
+  });
+
+  api.attachWidgetAction('post', 'markAsBlogPost', function() {
+    const post = this.model;
+    const current = post.get('topic.postStream.posts');
+
+    markAsBlogPost(post);
+
+    current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
+  });
+
+  api.attachWidgetAction('post', 'unmarkAsBlogPost', function() {
+    const post = this.model;
+    const current = post.get('topic.postStream.posts');
+
+    unmarkAsBlogPost(post);
+
+    current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
   });
 
 }
