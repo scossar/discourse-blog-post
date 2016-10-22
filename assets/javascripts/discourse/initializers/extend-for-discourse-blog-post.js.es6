@@ -89,23 +89,25 @@ export default {
 
     TopicController.reopen({
       headerImageSrc: function () {
-        // const topicURL = this.get('model.url');
-        // const postURL = topicURL + '/1';
-        console.log(this.get('model'));
-        const imageUrl = this.get('model.image_url');
-        // const firstCooked = ajax(postURL, {
-        //   type: 'GET'
-        // }).then(function (result) {
-        //   console.log('first cooked', result.post_stream.posts[0].cooked);
-        // });
-        // return "http://localhost:3000/uploads/default/original/1X/7684d6208c54b3a7a553ce39162b7ca11ff91156.jpg";
-        return imageUrl;
-      }.property()
+        return this.get('model.image_url');
+      }.property('model.image_url'),
+
+      currentPost: function () {
+        return this.get('model.currentPost');
+      }.property('model.image_url')
     });
 
     TopicView.reopen({
       addBlogBodyClass: function () {
         const hasBlogPost = this.get('controller.model.has_blog_post');
+        const currentPost = this.get('controller.currentPost');
+        // if (currentPost === 1) {
+        //   let firstImage = $('.cooked').find('img:first');
+        //   console.log('image', firstImage);
+        //   firstImage.hide();
+        // }
+
+        console.log('current post', currentPost);
         // const topicID = this.get('controller.model.url');
         if (hasBlogPost) {
           Em.$('body').addClass('blog-post');

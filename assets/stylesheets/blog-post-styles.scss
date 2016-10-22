@@ -21,3 +21,7 @@ button.widget-button.blog-post-icon i::before {
   max-width: 100%;
   height: auto;
 }
+
+.blog-post .cooked img:nth-of-type(1) {
+  display: none;
+}
