@@ -1,0 +1,4 @@
+plugins:
+  blog_post_enabled:
+    default: false
+    client: true
