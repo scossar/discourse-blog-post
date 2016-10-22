@@ -33,7 +33,6 @@ function unmarkAsBlogPost(post) {
   });
 }
 
-
 function initializeWithApi(api) {
   api.includePostAttributes('is_blog_post');
 
@@ -91,24 +90,12 @@ export default {
       headerImageSrc: function () {
         return this.get('model.image_url');
       }.property('model.image_url'),
-
-      currentPost: function () {
-        return this.get('model.currentPost');
-      }.property('model.image_url')
     });
 
     TopicView.reopen({
       addBlogBodyClass: function () {
         const hasBlogPost = this.get('controller.model.has_blog_post');
-        const currentPost = this.get('controller.currentPost');
-        // if (currentPost === 1) {
-        //   let firstImage = $('.cooked').find('img:first');
-        //   console.log('image', firstImage);
-        //   firstImage.hide();
-        // }
 
-        console.log('current post', currentPost);
-        // const topicID = this.get('controller.model.url');
         if (hasBlogPost) {
           Em.$('body').addClass('blog-post');
         } else {
@@ -120,7 +107,6 @@ export default {
         Em.$('body').removeClass('blog-post');
       }.on('willDestroyElement')
     });
-
 
     withPluginApi('0.1', initializeWithApi);
   }
