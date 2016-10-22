@@ -1,5 +1,7 @@
 # name: discourse-blog-post
 
+enabled_site_setting :blog_post_enabled
+
 register_asset 'stylesheets/blog-post-styles.scss'
 
 PLUGIN_NAME = 'discourse_blog_post'.freeze
