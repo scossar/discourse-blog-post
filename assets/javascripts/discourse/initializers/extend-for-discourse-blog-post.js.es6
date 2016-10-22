@@ -1,6 +1,9 @@
-import { withPluginApi } from 'discourse/lib/plugin-api';
-import { ajax } from 'discourse/lib/ajax';
-import { popupAjaxError } from 'discourse/lib/ajax-error';
+import {withPluginApi} from 'discourse/lib/plugin-api';
+import {ajax} from 'discourse/lib/ajax';
+import {popupAjaxError} from 'discourse/lib/ajax-error';
+import TopicView from 'discourse/views/topic';
+import TopicController from 'discourse/controllers/topic';
+// import PostView from 'discourse/views/post';
 
 function markAsBlogPost(post) {
   const topic = post.topic;
@@ -10,8 +13,8 @@ function markAsBlogPost(post) {
 
   ajax('/blog/mark_as_blog_post', {
     type: 'POST',
-    data: { id: post.id }
-  }).catch(function(error){
+    data: {id: post.id}
+  }).catch(function (error) {
     popupAjaxError(error);
   });
 }
@@ -24,12 +27,11 @@ function unmarkAsBlogPost(post) {
 
   ajax('/blog/unmark_as_blog_post', {
     type: 'POST',
-    data: { id: post.id }
-  }).catch(function(error){
+    data: {id: post.id}
+  }).catch(function (error) {
     popupAjaxError(error);
   });
 }
-
 
 
 function initializeWithApi(api) {
@@ -60,30 +62,48 @@ function initializeWithApi(api) {
     }
   });
 
-  api.attachWidgetAction('post', 'markAsBlogPost', function() {
+  api.attachWidgetAction('post', 'markAsBlogPost', function () {
     const post = this.model;
     const current = post.get('topic.postStream.posts');
 
     markAsBlogPost(post);
 
-    current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
+    current.forEach(p => this.appEvents.trigger('post-stream:refresh', {id: p.id}));
+    Em.$('body').addClass('blog-post');
   });
 
-  api.attachWidgetAction('post', 'unmarkAsBlogPost', function() {
+  api.attachWidgetAction('post', 'unmarkAsBlogPost', function () {
     const post = this.model;
     const current = post.get('topic.postStream.posts');
 
     unmarkAsBlogPost(post);
 
-    current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
+    current.forEach(p => this.appEvents.trigger('post-stream:refresh', {id: p.id}));
+    Em.$('body').removeClass('blog-post');
   });
-
-
 }
 
 export default {
   name: 'extend-for-discourse-blog-post',
   initialize() {
+
+    TopicController.reopen({});
+
+    TopicView.reopen({
+      addBlogBodyClass: function () {
+        const hasBlogPost = this.get('controller.model.has_blog_post');
+        // const topicID = this.get('controller.model.url');
+        if (hasBlogPost) {
+          Em.$('body').addClass('blog-post');
+        } else {
+          Em.$('body').removeClass('blog-post');
+        }
+      }.on('didInsertElement'),
+
+      removeBlogBodyClass: function () {
+        Em.$('body').removeClass('blog-post');
+      }.on('willDestroyElement')
+    });
 
 
     withPluginApi('0.1', initializeWithApi);
