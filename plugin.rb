@@ -96,7 +96,11 @@ after_initialize do
 
   require_dependency 'topic_view_serializer'
   class ::TopicViewSerializer
-    attributes :has_blog_post
+    attributes :has_blog_post, :image_url
+
+    def image_url
+      object.image_url
+    end
 
     def has_blog_post
       blog_post_id ? true : false

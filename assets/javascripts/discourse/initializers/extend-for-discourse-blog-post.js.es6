@@ -87,7 +87,21 @@ export default {
   name: 'extend-for-discourse-blog-post',
   initialize() {
 
-    TopicController.reopen({});
+    TopicController.reopen({
+      headerImageSrc: function () {
+        // const topicURL = this.get('model.url');
+        // const postURL = topicURL + '/1';
+        console.log(this.get('model'));
+        const imageUrl = this.get('model.image_url');
+        // const firstCooked = ajax(postURL, {
+        //   type: 'GET'
+        // }).then(function (result) {
+        //   console.log('first cooked', result.post_stream.posts[0].cooked);
+        // });
+        // return "http://localhost:3000/uploads/default/original/1X/7684d6208c54b3a7a553ce39162b7ca11ff91156.jpg";
+        return imageUrl;
+      }.property()
+    });
 
     TopicView.reopen({
       addBlogBodyClass: function () {
