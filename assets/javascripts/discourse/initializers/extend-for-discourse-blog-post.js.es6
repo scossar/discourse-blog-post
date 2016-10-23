@@ -1,7 +1,6 @@
 import {withPluginApi} from 'discourse/lib/plugin-api';
 import {ajax} from 'discourse/lib/ajax';
 import {popupAjaxError} from 'discourse/lib/ajax-error';
-import TopicView from 'discourse/views/topic';
 import TopicController from 'discourse/controllers/topic';
 
 function markAsBlogPost(post) {
@@ -93,20 +92,6 @@ export default {
       }.property('model.image_url'),
 
       hasBlogPost: Ember.computed.alias('model.has_blog_post')
-    });
-
-    TopicView.reopen({
-      addBlogBodyClass: function () {
-        const hasBlogPost = this.get('controller.hasBlogPost');
-
-        if (hasBlogPost) {
-          Em.$('body').addClass('blog-post');
-        }
-      }.on('didInsertElement'),
-
-      removeBlogBodyClass: function () {
-        Em.$('body').removeClass('blog-post');
-      }.on('willDestroyElement')
     });
 
     withPluginApi('0.1', initializeWithApi);
