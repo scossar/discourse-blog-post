@@ -45,7 +45,7 @@ function initializeWithApi(api) {
           className: 'blog-post-icon',
           title: 'blog_post.convert_to_regular_post',
           label: 'blog_post.convert_to_regular_post',
-          position: 'first'
+          position: 'second-last-hidden'
         }
       } else {
 
@@ -55,7 +55,7 @@ function initializeWithApi(api) {
           className: 'not-blog-post-icon',
           title: 'blog_post.convert_to_blog_post',
           label: 'blog_post.convert_to_blog_post',
-          position: 'first'
+          position: 'second-last-hidden'
         }
       }
     }
