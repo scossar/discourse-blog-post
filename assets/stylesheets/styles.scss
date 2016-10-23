@@ -1,0 +1,236 @@
+.blog-post,
+.mobile-view .blog-post {
+  .profiler-results {
+    display: none;
+  }
+
+  #main-outlet {
+
+    // Things to hide
+    .create-topics-notice,
+    .too-few-topics-notice,
+    #topic-progress,
+    #topic-progress-expanded,
+    .title-wrapper .edit-topic,
+    .post-info,
+    .post-info.edits,
+    .topic-avatar,
+    .title-wrapper .badge-wrapper,
+    .topic-meta-data,
+    .notification-options,
+    .posts button.create,
+    .header-image, // hide the header image so it doesn't display twice
+    .header-image + .meta {
+      display: none;
+    }
+
+    // set box-sizing to 'content-box' anywhere 'border-box' is causing problems
+    box-sizing: border-box;
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    // Sets the width where the header image will stop displaying full window width
+    @media (min-width: 1400px) {
+      position: relative;
+    }
+
+    // Positions top of background image - adjust for header height
+    padding-top: 60px;
+
+    // Base - elements without a class
+    font-size: 18px;
+    color: #666 !important;
+    line-height: 1.4em;
+
+    p {
+      font-size: 1em;
+    }
+
+    h1, h2, h3, h4 {
+      color: #444 !important;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+     p img,
+     .lightbox-wrapper img {
+       margin-bottom: 1em;
+     }
+
+    figure {
+      margin: 0;
+    }
+
+    figcaption {
+      margin-top: -16px;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    img.avatar {
+      max-width: 45px;
+    }
+  }
+
+  // Classes
+
+  // holds the background image if there is one
+  .bg-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .topic-avatar {
+    border-top: none;
+  }
+
+  .title-wrapper {
+    @include clearfix;
+  }
+
+  .topic-poster {
+    @include clearfix;
+    float: left;
+    margin-top: 8px;
+    font-size: 0.8em;
+    .poster-details {
+      font-weight: bold;
+    }
+  }
+
+  .topic-post {
+    border-top: 1px solid #e9e9e9;
+  }
+
+  .topic-body {
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    width: 100%;
+    border-top: none;
+  }
+
+  .posts {
+    position: relative;
+  }
+
+  #user-card {
+    box-sizing: content-box;
+    font-size: 14px;
+    .card-huge-avatar img.avatar {
+      max-width: none;
+      width: 120px !important;
+      height: 120px !important;
+    }
+  }
+
+  .large-letter {
+    // <span class="large-letter"></span> is a whitelisted tag
+    // this could be given some better custom styling
+    font-size: 36px;
+  }
+
+  // This is the 'reply as linked topic' area - move it to the bottom for now.
+  .gutter {
+    position: relative;
+    left: 0;
+    bottom: 100%;
+    width: 66%;
+    padding-left: 0;
+    display: block !important;
+
+    .track-link {
+       //without the padding it disappears.
+      padding-left: 1px;
+    }
+    .reply-new {
+      padding-left: 18px;
+      padding-bottom: 13px;
+      opacity: 1 !important;
+    }
+  }
+
+  .posts,
+  #topic-title {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: 768px) {
+      width: 66%;
+      max-width: none;
+      margin-left: auto !important; // overrides !important in mobile.scss
+      margin-right: auto !important;
+    }
+  }
+
+  #topic-title {
+    margin-top: 16px;
+  }
+
+  // Get rid of the initial blue flash
+  .topic-body[style] {
+    background-color: #fff !important;
+  }
+
+  #topic-footer-buttons {
+    padding: 13px;
+    font-size: 14px;
+  }
+
+  #share-link {
+    box-sizing: content-box;
+  }
+
+  blockquote {
+    background: #f9f9f9;
+    color: #777;
+    border-left: 10px solid #ccc;
+    padding: 0.5em 10px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+  }
+  blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  blockquote p {
+    display: inline;
+  }
+
+  #suggested-topics {
+    //font-size: 0.8889em;
+    font-size: 14px;
+
+    .topic-list th:first-of-type, .topic-list td:first-of-type {
+      padding-left: 0;
+    }
+    .default {
+      width: 66%;
+    }
+    .category {
+      display: none;
+    }
+    .posts {
+      width: 10%;
+    }
+    .views {
+      width: 10%;
+    }
+    .activity {
+      width: 16%;
+    }
+  }
+}
+
+// Adjust to header height
+.mobile-view .blog-post #main-outlet {
+  padding-top: 57px;
+}
