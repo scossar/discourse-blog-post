@@ -3,7 +3,6 @@ import {ajax} from 'discourse/lib/ajax';
 import {popupAjaxError} from 'discourse/lib/ajax-error';
 import TopicView from 'discourse/views/topic';
 import TopicController from 'discourse/controllers/topic';
-// import PostView from 'discourse/views/post';
 
 function markAsBlogPost(post) {
   const topic = post.topic;
@@ -34,12 +33,13 @@ function unmarkAsBlogPost(post) {
 }
 
 function initializeWithApi(api) {
-  api.includePostAttributes('is_blog_post');
+  api.includePostAttributes('is_blog_post', 'can_create_blog_post');
 
   api.addPostMenuButton('blogPost', attrs => {
 
-    if (attrs.firstPost) {
+    if (attrs.firstPost && attrs.can_create_blog_post) {
       if (attrs.is_blog_post) {
+
         return {
           action: 'unmarkAsBlogPost',
           icon: 'pencil-square',
@@ -49,6 +49,7 @@ function initializeWithApi(api) {
           position: 'first'
         }
       } else {
+
         return {
           action: 'markAsBlogPost',
           icon: 'pencil-square-o',
@@ -90,16 +91,16 @@ export default {
       headerImageSrc: function () {
         return this.get('model.image_url');
       }.property('model.image_url'),
+
+      hasBlogPost: Ember.computed.alias('model.has_blog_post')
     });
 
     TopicView.reopen({
       addBlogBodyClass: function () {
-        const hasBlogPost = this.get('controller.model.has_blog_post');
+        const hasBlogPost = this.get('controller.hasBlogPost');
 
         if (hasBlogPost) {
           Em.$('body').addClass('blog-post');
-        } else {
-          Em.$('body').removeClass('blog-post');
         }
       }.on('didInsertElement'),
 

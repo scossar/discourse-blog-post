@@ -79,6 +79,7 @@ after_initialize do
       self.class.reset_blog_post_cache unless @@blog_post_cache['categories']
       @@blog_post_cache['categories'].include?(category_id)
     end
+
   end
 
   # Add the 'blog_posts_enabled' attribute to categories.
@@ -98,7 +99,7 @@ after_initialize do
 
   require_dependency 'topic_view_serializer'
   class ::TopicViewSerializer
-    attributes :has_blog_post, :image_url
+    attributes :has_blog_post, :image_url, :blog_post_id
 
     def image_url
       object.image_url
@@ -117,10 +118,26 @@ after_initialize do
 
   require_dependency 'post_serializer'
   class ::PostSerializer
-    attributes :is_blog_post
+    attributes :is_blog_post, :can_create_blog_post
 
     def is_blog_post
       post_custom_fields['is_blog_post'] == 'true'
+    end
+
+    def can_create_blog_post
+      allowed_groups = SiteSetting.blog_post_allowed_groups.split('|')
+      current_user = scope.current_user.present? ? scope.current_user : nil
+      topic = (topic_view && topic_view.topic) || object.topic
+
+      unless current_user && (current_user.id == topic.user_id || current_user.admin)
+        return false
+      end
+
+      current_user.groups.each do |group|
+        return true if allowed_groups.include?(group.name)
+      end
+
+      false
     end
   end
 

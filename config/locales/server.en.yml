@@ -1,3 +1,4 @@
 en:
   site_settings:
     blog_post_enabled: "Enable blog posts?"
+    blog_post_allowed_groups: "Groups that are allowed to create blog posts."

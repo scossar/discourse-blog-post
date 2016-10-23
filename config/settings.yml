@@ -2,3 +2,7 @@ plugins:
   blog_post_enabled:
     default: false
     client: true
+  blog_post_allowed_groups:
+    type: list
+    default: "admins|moderators"
+    client: true
