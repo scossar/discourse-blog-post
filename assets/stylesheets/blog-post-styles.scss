@@ -38,8 +38,15 @@ button.widget-button.blog-post-icon i::before {
     font-size: small;
   }
 
+  .topic-avatar {
+    padding-top: 0;
+    width: 45px;
+    float: left;
+    padding-right: 6px;
+  }
+
   .topic-body {
-    background-color: lighten(#EEE8AA, 15%);
+    background-color: #f6f6f6;
   }
 
   .cooked {
@@ -50,28 +57,39 @@ button.widget-button.blog-post-icon i::before {
     border-top: none;
   }
 
+  .topic-post {
+    padding-bottom: 8px;
+  }
+
   .topic-post:first-child {
     font-size: 1.2em;
     line-height: 1.4;
+    padding-bottom: 0;
     .topic-avatar {
       border-top: 1px solid #e9e9e9;
+      padding-top: 4px;
     }
     .topic-body {
       background-color: #fff;
+      padding-top: 16px;
     }
     .cooked {
       padding: 0;
     }
-  }
-
-  .cooked img:nth-of-type(1) {
-    display: none;
+    .cooked p:first-child img {
+      display: none;
+    }
+    .cooked
+    .actions {
+      font-size: 14px;
+    }
   }
 
   .large-letter {
     // <span class="large-letter"></span> is a whitelisted tag
-    // this could be given some better custom styling
     font-size: 36px;
+    line-height: 23px;
+    font-family: Georgia;
   }
 
   figure {
@@ -102,6 +120,9 @@ button.widget-button.blog-post-icon i::before {
   blockquote p {
     display: inline;
   }
+}
 
-
+// Hide the timeline when first entering the topic.
+.blog-post.blog-post-docked .timeline-container.timeline-docked {
+  display: none;
 }
