@@ -3,3 +3,5 @@ en:
     blog_post:
       convert_to_blog_post: "Convert to blog post"
       convert_to_regular_post: "Convert to regular post"
+      allow_blog_posts: "Allow blog posts for this categetory?"
+      has_blog_post: "This topic is a blog post"
