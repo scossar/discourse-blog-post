@@ -18,7 +18,7 @@ button.widget-button.blog-post-icon i::before {
 }
 
 .blog-post-header-container img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -61,64 +61,70 @@ button.widget-button.blog-post-icon i::before {
     padding-bottom: 8px;
   }
 
+  // The blog post.
   .topic-post:first-child {
-    font-size: 1.2em;
+    font-size: 1.25em;
     line-height: 1.4;
     padding-bottom: 0;
+    padding-top: 4px;
+
     .topic-avatar {
       border-top: 1px solid #e9e9e9;
       padding-top: 4px;
     }
+
     .topic-body {
       background-color: #fff;
       padding-top: 16px;
     }
+
     .cooked {
       padding: 0;
     }
-    .cooked p:first-child img {
+
+    .blog-post-image {
       display: none;
     }
-    .cooked
-    .actions {
+
+    nav.post-controls .actions {
       font-size: 14px;
     }
-  }
 
-  .large-letter {
-    // <span class="large-letter"></span> is a whitelisted tag
-    font-size: 36px;
-    line-height: 23px;
-    font-family: Georgia;
-  }
+    .large-letter {
+      // <span class="large-letter"></span> is a whitelisted tag
+      font-size: 36px;
+      line-height: 23px;
+      font-family: Georgia;
+    }
 
-  figure {
-    margin: 0;
-  }
+    figure {
+      margin: 0;
+    }
 
-  figcaption {
-    margin-top: -16px;
-    font-size: 0.8em;
-    font-weight: bold;
-  }
+    figcaption {
+      margin-top: -16px;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
 
-  blockquote {
-    background: #f9f9f9;
-    color: #777;
-    border-left: 10px solid #ccc;
-    padding: 0.5em 10px;
-    quotes: "\201C" "\201D" "\2018" "\2019";
-  }
-  blockquote:before {
-    color: #ccc;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-  }
-  blockquote p {
-    display: inline;
+    blockquote {
+      background: #f9f9f9;
+      color: #777;
+      border-left: 10px solid #ccc;
+      padding: 0.5em 10px;
+      quotes: "\201C" "\201D" "\2018" "\2019";
+    }
+    blockquote:before {
+      color: #ccc;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote p {
+      display: inline;
+    }
   }
 }
 

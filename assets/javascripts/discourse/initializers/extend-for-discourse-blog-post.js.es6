@@ -2,6 +2,7 @@ import {withPluginApi} from 'discourse/lib/plugin-api';
 import {ajax} from 'discourse/lib/ajax';
 import {popupAjaxError} from 'discourse/lib/ajax-error';
 import TopicController from 'discourse/controllers/topic';
+import TopicStatus from 'discourse/views/topic-status';
 
 function markAsBlogPost(post) {
   const topic = post.topic;
@@ -12,9 +13,7 @@ function markAsBlogPost(post) {
   ajax('/blog/mark_as_blog_post', {
     type: 'POST',
     data: {id: post.id}
-  }).catch(function (error) {
-    popupAjaxError(error);
-  });
+  }).catch(popupAjaxError);
 }
 
 function unmarkAsBlogPost(post) {
@@ -26,36 +25,49 @@ function unmarkAsBlogPost(post) {
   ajax('/blog/unmark_as_blog_post', {
     type: 'POST',
     data: {id: post.id}
-  }).catch(function (error) {
-    popupAjaxError(error);
-  });
+  }).catch(popupAjaxError);
+}
+
+function addBlogImageClass($elem, helper) {
+  if (helper) {
+    const post = helper.getModel();
+    const isBlogPost = post.get('is_blog_post');
+    const imageUrl = post.get('image_url');
+
+    if (isBlogPost && imageUrl) {
+      $elem.find('img').first().addClass('blog-post-image');
+      $elem.addClass('blog-post-content');
+    } else if (isBlogPost) {
+      $elem.addClass('blog-post-content');
+    }
+  }
 }
 
 function initializeWithApi(api) {
-  api.includePostAttributes('is_blog_post', 'can_create_blog_post');
+  api.includePostAttributes('is_blog_post', 'can_create_blog_post', 'allow_blog_posts_in_category', 'image_url');
 
   api.addPostMenuButton('blogPost', attrs => {
 
-    if (attrs.firstPost && attrs.can_create_blog_post) {
+    if (attrs.firstPost && attrs.can_create_blog_post && attrs.allow_blog_posts_in_category) {
       if (attrs.is_blog_post) {
 
         return {
           action: 'unmarkAsBlogPost',
-          icon: 'pencil-square',
+          icon: 'book',
           className: 'blog-post-icon',
           title: 'blog_post.convert_to_regular_post',
           label: 'blog_post.convert_to_regular_post',
-          position: 'first'
+          position: 'second-last-hidden'
         }
       } else {
 
         return {
           action: 'markAsBlogPost',
-          icon: 'pencil-square-o',
+          icon: 'book',
           className: 'not-blog-post-icon',
           title: 'blog_post.convert_to_blog_post',
           label: 'blog_post.convert_to_blog_post',
-          position: 'first'
+          position: 'second-last-hidden'
         }
       }
     }
@@ -80,6 +92,8 @@ function initializeWithApi(api) {
     current.forEach(p => this.appEvents.trigger('post-stream:refresh', {id: p.id}));
     Em.$('body').removeClass('blog-post');
   });
+
+  api.decorateCooked(addBlogImageClass);
 }
 
 export default {
@@ -92,6 +106,21 @@ export default {
       }.property('model.image_url'),
 
       hasBlogPost: Ember.computed.alias('model.has_blog_post')
+    });
+
+    TopicStatus.reopen({
+      statuses: function () {
+        const results = this._super();
+        if (this.topic.has_blog_post) {
+          results.push({
+            openTag: 'span',
+            closeTag: 'span',
+            title: I18n.t('blog_post.has_blog_post'),
+            icon: 'book',
+          });
+        }
+        return results;
+      }.property()
     });
 
     withPluginApi('0.1', initializeWithApi);

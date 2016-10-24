@@ -1,15 +1,35 @@
 ## Discourse Blog Post
 
-*note: This README is out of date.
+This plugin is for adding 'blog post' styles to the first post in a Discourse topic. If the post contains images, it places the first image
+in a full width header above the topic. It adds the css class `blog-post` to the topic's `body` tag, and the class `blog-post-content` to
+the cooked content of the post.
 
-This plugin is for adding a blog-post category to Discourse. The blog post category
-may be styled separately from the other Discourse categories.
+The ability to create blog-posts on a forum is controlled by group membership. By default, only members
+of the `admins` and `moderators` groups are allowed to create blog-posts.
 
+Blog posts must be enabled for a category before they can be created. This is done in the category/edit/settings modal.
 
-![alt tag](https://cloud.githubusercontent.com/assets/2975917/10718114/f17f1dec-7b27-11e5-8efd-28a65c00bb53.png)
+Blog posts can be turned back to regular posts, either by the topic owner, or by a forum admin.
 
+The plugin adds some basic css rules for styling blog-posts. It allows you to use `<span class="large-letter"></span>` for
+creating large leading letters for paragraphs.
 
-![alt tag](https://cloud.githubusercontent.com/assets/2975917/10718116/fa4ac7e6-7b27-11e5-81fe-edb8614c540b.png)
+To add further styling to blog posts on a forum, add styles to the `blog-post` class, for general page styles,
+or to the `blog-post-content` class for styling the content of the posts. For example, this will increase the font
+size to `20px` and set the `max-height` of the header image to `440px`.
+
+    .blog-post-content {
+        font-size: 20px;
+    }
+    
+    .blog-post .blog-post-header-container {
+        width: 100%;
+        max-height: 440px;
+        overflow: hidden;
+    }
+    
+
+![alt tag](https://cloud.githubusercontent.com/assets/2975917/19636010/48bb2fb6-997b-11e6-9418-3f9af44e77a7.png)
 
 
 ### Installation
@@ -17,32 +37,8 @@ may be styled separately from the other Discourse categories.
 Follow the [Install a Plugin](https://meta.discourse.org/t/install-a-plugin/19157) howto, using
 `git clone https://github.com/scossar/discourse-blog-post` as the plugin command.
 
-Once you've installed it, review the settings under plugins in the admin section of your
-forum.
+Once you've installed it, go to the plugin settings page to enable the plugin and configure which groups should be
+allowed to create blog posts. Then, select the 'Allow blog posts' setting in the category edit modal for any categories that you wish to use.
 
-
-### Use
-
-The blog post category defaults to 'blog'. This can be changed in the plugin settings.
-When a topic of the chosen blog post category is visited in the browser, the css class
-`.blog-post` is added to the body. Custom styles may be added to the `.blog-post` class.
-
-
-#### Creating a header image for the post
-
-Upload an image in the Discourse editor and add `class="header-image"` to the img tag.
-The header-image height can be set by adding an optional data-attribute `data-max-height` to the
-`img` tag. `data-max-height` accepts only a number, with no units, for its value.
-
-Here is an example of an image tag that sets a header-image with a max height of 500px.
-`<img src="/uploads/default/original/1X/103a294fe350cf4fbaee1ca6d9cc162230d7b90f.jpg" width="690" height="461" class="header-image" data-max-height="500">`
-Note that the `class` and the `data-max-height` attributes have been added to the tag.
-
-#### Creating large letters
-
-Letters placed inside of `<span class="large-letter"></span>` tags will be given a default
-style of `font-size: 36px` That may be adjusted as a custom style.
-
-### Suggestions for improvement
-
-Pull requests and suggestions for improvement are welcome.
+If you have any problems with this plugin, feel free to create an issue here. Any improvements to the plugin's css would be greatly appreciated.
+Pull requests are welcome.
