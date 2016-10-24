@@ -1,4 +1,8 @@
 # name: discourse-blog-post
+# about: Style a Discourse post as a blog post
+# version: 0.2
+# authors: scossar
+# url: https://github.com/scossar/discourse-blog-post
 
 enabled_site_setting :blog_post_enabled
 
@@ -82,24 +86,13 @@ after_initialize do
 
   end
 
-  # Add the 'blog_posts_enabled' attribute to categories.
-  require_dependency 'basic_category_serializer'
-  class ::BasicCategorySerializer
-    attributes :blog_posts_enabled
-
-    def blog_posts_enabled
-      scope && scope.allow_blog_posts_in_category?(object.id)
-    end
-  end
-
-
   TopicView.add_post_custom_fields_whitelister do |user|
     ['is_blog_post']
   end
 
   require_dependency 'topic_view_serializer'
   class ::TopicViewSerializer
-    attributes :has_blog_post, :image_url, :blog_post_id
+    attributes :has_blog_post, :image_url
 
     def image_url
       object.image_url
@@ -118,7 +111,12 @@ after_initialize do
 
   require_dependency 'post_serializer'
   class ::PostSerializer
-    attributes :is_blog_post, :can_create_blog_post
+    attributes :is_blog_post, :can_create_blog_post, :allow_blog_posts_in_category, :image_url
+
+    def image_url
+      topic = (topic_view && topic_view.topic) || object.topic
+      topic.image_url
+    end
 
     def is_blog_post
       post_custom_fields['is_blog_post'] == 'true'
@@ -138,6 +136,20 @@ after_initialize do
       end
 
       false
+    end
+
+    def allow_blog_posts_in_category
+      topic = (topic_view && topic_view.topic) || object.topic
+      scope && scope.allow_blog_posts_in_category?(topic.category_id)
+    end
+  end
+
+  require_dependency 'topic_list_item_serializer'
+  class ::TopicListItemSerializer
+    attributes :has_blog_post
+
+    def has_blog_post
+      object.custom_fields['blog_post_id'] ? true : false
     end
   end
 
