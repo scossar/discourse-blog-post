@@ -5,5 +5,7 @@ registerOption((siteSettings, opts) => {
 });
 
 export function setup(helper) {
-  helper.whiteList([ 'span.large-letter']);
+  helper.whiteList([
+    'span.large-letter'
+  ]);
 }
