@@ -5,7 +5,7 @@ export default Ember.Component.extend(Scrolling, {
   tagName: 'div',
   classNames: 'discourse-blog-post-header',
 
-  @on('didInsertElement')
+  @on('didInsertElement', 'didReceiveAttrs')
   addBodyClass() {
     let bodyClasses = Discourse.SiteSettings.blog_post_use_default_styles ? 'blog-post blog-post-docked use-blog-post-styles' : 'blog-post blog-post-docked';
     $('body').addClass(bodyClasses);
