@@ -2,15 +2,31 @@ button.widget-button.blog-post-icon i::before {
   color: gold;
 }
 
+.blog-post-header-container {
+  overflow: hidden;
+}
+
 .blog-post-header-container img {
   width: 100%;
   height: auto;
+}
+
+.mobile-view .blog-post-header-container img {
+  width: 125%;
+  margin-left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.mobile-view .blog-post #main-outlet {
+  padding-top: 60px;
 }
 
 .blog-post {
   #main-outlet {
     padding-top: 62px;
   }
+
 
   #topic-title h1 {
     font-size: 3em;
