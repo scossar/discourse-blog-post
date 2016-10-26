@@ -6,3 +6,7 @@ plugins:
     type: list
     default: "admins|moderators"
     client: true
+  blog_post_allowed_categories:
+    type: list
+    default: ""
+    client: true
