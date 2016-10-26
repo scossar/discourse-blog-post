@@ -18,15 +18,20 @@ button.widget-button.blog-post-icon i::before {
   transform: translateX(-50%);
 }
 
+.blog-post #main-outlet {
+  padding-top: 62px;
+}
+
 .mobile-view .blog-post #main-outlet {
   padding-top: 60px;
 }
 
+.blog-post .blog-post-image {
+  display: none;
+}
+
 // The default blog-post styles (used when the use_default_styles setting is enabled.)
 .blog-post.use-blog-post-styles {
-  #main-outlet {
-    padding-top: 62px;
-  }
 
   #topic-title h1 {
     font-size: 3em;
@@ -81,10 +86,6 @@ button.widget-button.blog-post-icon i::before {
 
     .cooked {
       padding: 0;
-    }
-
-    .blog-post-image {
-      display: none;
     }
 
     nav.post-controls .actions,
