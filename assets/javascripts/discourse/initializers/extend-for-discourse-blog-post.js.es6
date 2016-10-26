@@ -56,7 +56,6 @@ function initializeWithApi(api) {
           icon: 'book',
           className: 'blog-post-icon',
           title: 'blog_post.convert_to_regular_post',
-          label: 'blog_post.convert_to_regular_post',
           position: 'second-last-hidden'
         }
       } else {
@@ -66,7 +65,6 @@ function initializeWithApi(api) {
           icon: 'book',
           className: 'not-blog-post-icon',
           title: 'blog_post.convert_to_blog_post',
-          label: 'blog_post.convert_to_blog_post',
           position: 'second-last-hidden'
         }
       }
@@ -76,11 +74,11 @@ function initializeWithApi(api) {
   api.attachWidgetAction('post', 'markAsBlogPost', function () {
     const post = this.model;
     const current = post.get('topic.postStream.posts');
+    const topic = post.get('topic');
 
     markAsBlogPost(post);
 
     current.forEach(p => this.appEvents.trigger('post-stream:refresh', {id: p.id}));
-    Em.$('body').addClass('blog-post');
   });
 
   api.attachWidgetAction('post', 'unmarkAsBlogPost', function () {
@@ -90,7 +88,6 @@ function initializeWithApi(api) {
     unmarkAsBlogPost(post);
 
     current.forEach(p => this.appEvents.trigger('post-stream:refresh', {id: p.id}));
-    Em.$('body').removeClass('blog-post');
   });
 
   api.decorateCooked(addBlogImageClass);
@@ -113,8 +110,10 @@ export default {
         const results = this._super();
         if (this.topic.has_blog_post) {
           results.push({
-            openTag: 'span',
-            closeTag: 'span',
+            openTag: 'a href',
+            closeTag: 'a',
+            href: this.topic.get('url'),
+            extraClasses: 'topic-status-blog-post',
             title: I18n.t('blog_post.has_blog_post'),
             icon: 'book',
           });
