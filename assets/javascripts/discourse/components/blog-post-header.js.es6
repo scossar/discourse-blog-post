@@ -7,16 +7,15 @@ export default Ember.Component.extend(Scrolling, {
 
   @on('didInsertElement')
   addBodyClass() {
-    $('body').addClass('blog-post blog-post-docked');
-    if (Discourse.SiteSettings.blog_post_use_default_styles) {
-      $('body').addClass('use-blog-post-styles');
-    }
+    let bodyClasses = Discourse.SiteSettings.blog_post_use_default_styles ? 'blog-post blog-post-docked use-blog-post-styles' : 'blog-post blog-post-docked';
+    $('body').addClass(bodyClasses);
+
     this.bindScrolling({name: 'blog-post-header'});
   },
 
   @on('willDestroyElement')
   removeBodyClass() {
-    $('body').removeClass('blog-post');
+    $('body').removeClass('blog-post use-blog-post-styles blog-post-docked');
   },
 
   scrolled() {
