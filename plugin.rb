@@ -109,8 +109,10 @@ after_initialize do
     end
 
     def allow_blog_posts_in_category
+      allowed_categories = SiteSetting.blog_post_allowed_categories.split('|')
       topic = (topic_view && topic_view.topic) || object.topic
-      scope && scope.allow_blog_posts_in_category?(topic.category_id)
+
+      allowed_categories.include? topic.category.name
     end
   end
 
