@@ -22,11 +22,11 @@ button.widget-button.blog-post-icon i::before {
   padding-top: 60px;
 }
 
-.blog-post {
+// The default blog-post styles (used when the use_default_styles setting is enabled.)
+.blog-post.use-blog-post-styles {
   #main-outlet {
     padding-top: 62px;
   }
-
 
   #topic-title h1 {
     font-size: 3em;
@@ -87,7 +87,8 @@ button.widget-button.blog-post-icon i::before {
       display: none;
     }
 
-    nav.post-controls .actions {
+    nav.post-controls .actions,
+    .topic-map {
       font-size: 14px;
     }
 
