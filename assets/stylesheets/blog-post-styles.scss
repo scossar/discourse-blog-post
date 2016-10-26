@@ -2,15 +2,44 @@ button.widget-button.blog-post-icon i::before {
   color: gold;
 }
 
+.blog-post-header-container {
+  overflow: hidden;
+}
+
 .blog-post-header-container img {
   width: 100%;
   height: auto;
 }
 
-.blog-post {
-  #main-outlet {
-    padding-top: 62px;
+.mobile-view .blog-post-header-container img {
+  width: 130%;
+  margin-left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.blog-post #main-outlet {
+  padding-top: 62px;
+}
+
+.mobile-view .blog-post #main-outlet {
+  padding-top: 60px;
+}
+
+.blog-post .blog-post-image {
+  display: none;
+}
+
+.mobile-view .blog-post.use-blog-post-styles {
+  #topic-title h1 {
+    font-size: 2em;
+    line-height: 1.2;
+    margin-bottom: 4px;
   }
+}
+
+// The default blog-post styles (used when the use_default_styles setting is enabled.)
+.blog-post.use-blog-post-styles {
 
   #topic-title h1 {
     font-size: 3em;
@@ -67,18 +96,16 @@ button.widget-button.blog-post-icon i::before {
       padding: 0;
     }
 
-    .blog-post-image {
-      display: none;
-    }
-
-    nav.post-controls .actions {
+    nav.post-controls .actions,
+    .topic-map {
       font-size: 14px;
     }
 
     .large-letter {
       // <span class="large-letter"></span> is a whitelisted tag
-      font-size: 36px;
-      line-height: 23px;
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 1px;
       font-family: Georgia;
     }
 
