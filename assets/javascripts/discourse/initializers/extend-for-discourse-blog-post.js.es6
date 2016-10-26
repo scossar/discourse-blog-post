@@ -48,7 +48,7 @@ function initializeWithApi(api) {
 
   api.addPostMenuButton('blogPost', attrs => {
 
-    if (attrs.firstPost && attrs.can_create_blog_post && attrs.allow_blog_posts_in_category) {
+    if (attrs.firstPost && attrs.can_create_blog_post) {
       if (attrs.is_blog_post) {
 
         return {
@@ -58,7 +58,8 @@ function initializeWithApi(api) {
           title: 'blog_post.convert_to_regular_post',
           position: 'second-last-hidden'
         }
-      } else {
+
+      } else if (attrs.allow_blog_posts_in_category) {
 
         return {
           action: 'markAsBlogPost',
