@@ -39,7 +39,8 @@ size to `20px` and set the `max-height` of the header image to `440px`.
 The plugin's default styles can be disabled by deselecting the 'blog post use default styles' checkbox on the settings
 page. This could also be useful if you only wish to use the plugin's header-image function.
 
-![alt tag](https://cloud.githubusercontent.com/assets/2975917/19636010/48bb2fb6-997b-11e6-9418-3f9af44e77a7.png)
+![alt tag](https://cloud.githubusercontent.com/assets/2975917/19752137/dfba541a-9baf-11e6-8b87-c55d6b6e4bc8.png)
+![alt tag](https://cloud.githubusercontent.com/assets/2975917/19752147/f3783f12-9baf-11e6-9849-1d2450d6bef3.png)
 
 ### Installation
 
