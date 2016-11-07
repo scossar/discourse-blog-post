@@ -112,7 +112,12 @@ after_initialize do
       allowed_categories = SiteSetting.blog_post_allowed_categories.split('|')
       topic = (topic_view && topic_view.topic) || object.topic
 
-      allowed_categories.include? topic.category.name
+      # Private messages and banners don't have a category.
+      if topic.category_id
+        allowed_categories.include? topic.category.name
+      else
+        false
+      end
     end
   end
 
