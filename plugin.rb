@@ -1,6 +1,6 @@
 # name: discourse-blog-post
 # about: Style a Discourse post as a blog post
-# version: 0.2.1
+# version: 0.2.2
 # authors: scossar
 # url: https://github.com/scossar/discourse-blog-post
 
