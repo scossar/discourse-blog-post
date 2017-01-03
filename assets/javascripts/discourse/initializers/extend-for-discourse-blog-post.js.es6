@@ -1,7 +1,6 @@
 import {withPluginApi} from 'discourse/lib/plugin-api';
 import {ajax} from 'discourse/lib/ajax';
 import {popupAjaxError} from 'discourse/lib/ajax-error';
-import TopicController from 'discourse/controllers/topic';
 import TopicStatus from 'discourse/views/topic-status';
 
 function markAsBlogPost(post) {
@@ -97,14 +96,6 @@ function initializeWithApi(api) {
 export default {
   name: 'extend-for-discourse-blog-post',
   initialize() {
-
-    TopicController.reopen({
-      headerImageSrc: function () {
-        return this.get('model.image_url');
-      }.property('model.image_url'),
-
-      hasBlogPost: Ember.computed.alias('model.has_blog_post')
-    });
 
     TopicStatus.reopen({
       statuses: function () {
