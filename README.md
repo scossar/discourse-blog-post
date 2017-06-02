@@ -1,4 +1,4 @@
-**Note:** I'm no longer supporting this plugin. I think the [WP Discourse]https://github.com/discourse/wp-discourse) WordPress plugin is a better alternative for combining styled posts with a Discourse forum. If anyone would like to take over maintaining the Discourse Blog Post plugin, that would be great.
+**Note:** I'm no longer supporting this plugin. I think the [WP Discourse](https://github.com/discourse/wp-discourse) WordPress plugin is a better alternative for combining styled posts with a Discourse forum. If anyone would like to take over maintaining the Discourse Blog Post plugin, that would be great.
 
 ## Discourse Blog Post
 
